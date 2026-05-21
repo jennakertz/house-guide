@@ -1,26 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
+import { Sunrise, Utensils, UtensilsCrossed, Moon, BedDouble, ChevronDown } from 'lucide-react'
 
-const SAGE = '#7BAF8A'
-const SAGE_LIGHT = '#EAF3ED'
-const TEXT = '#3A3530'
-const TEXT_MUTED = '#7A746E'
-const BORDER = '#EBE8E3'
-const CARD = '#FFFFFF'
-
-const SLEEP_IDS = new Set(['nap1', 'nap2', 'bedtime', 'overnight'])
-const MEAL_IDS  = new Set(['wake', 'breakfast', 'lunch', 'snack', 'dinner'])
-
-function getCardBg(id) {
-  if (SLEEP_IDS.has(id)) return '#EEF4FB'
-  if (MEAL_IDS.has(id))  return '#FDF6EE'
-  return CARD
-}
-
-function getDotColor(id) {
-  if (SLEEP_IDS.has(id)) return '#5B8DB8'
-  if (MEAL_IDS.has(id))  return '#5A9470'
-  return '#C4795A'
-}
+const TERRA      = '#B85C38'
+const TEXT       = '#2C1A12'
+const TEXT_MUTED = '#7A5C4E'
+const BORDER     = '#D9CABF'
+const CARD       = '#FAF6F1'
 
 const ALL_EVENTS = [
   {
@@ -29,7 +14,7 @@ const ALL_EVENTS = [
     startHour: 6,
     endHour: 7.25,
     title: 'Wake up & morning bottle',
-    icon: '🌅',
+    Icon: Sunrise,
     summary: 'Let him wake naturally, then bottle time.',
     details: [
       'Leave him in the crib until 7:00–7:15 AM — no need to rush in.',
@@ -43,7 +28,7 @@ const ALL_EVENTS = [
     startHour: 7.25,
     endHour: 9,
     title: 'Breakfast & playtime',
-    icon: '🥣',
+    Icon: Utensils,
     summary: 'Food from his shelf in the fridge.',
     details: [
       'His food is on the middle shelf of the fridge — that\'s Lincoln\'s shelf.',
@@ -58,7 +43,7 @@ const ALL_EVENTS = [
     startHour: 10,
     endHour: 11.5,
     title: 'First nap',
-    icon: '😴',
+    Icon: Moon,
     summary: 'About 3.5 hrs after wake-up.',
     details: [
       'Nap starts roughly 3.5 hours after he woke up.',
@@ -73,7 +58,7 @@ const ALL_EVENTS = [
     startHour: 11.5,
     endHour: 12.5,
     title: 'Wake from nap + lunch',
-    icon: '🍽️',
+    Icon: Utensils,
     summary: 'Nap is usually about 1.5 hours.',
     details: [
       'He usually sleeps about 1.5 hours, so expect him up around 11:30 AM.',
@@ -88,7 +73,7 @@ const ALL_EVENTS = [
     startHour: 15,
     endHour: 15.5,
     title: 'Second nap',
-    icon: '🌙',
+    Icon: Moon,
     summary: 'Same routine as the first nap.',
     details: [
       'Same routine: diaper → sleep sack → 1–2 books → crib with animals + 3 pacifiers.',
@@ -102,7 +87,7 @@ const ALL_EVENTS = [
     startHour: 16.5,
     endHour: 17.25,
     title: 'Wake from nap + snack',
-    icon: '🍌',
+    Icon: Utensils,
     summary: 'Do not let him sleep past 5:15 PM.',
     details: [
       'If he\'s still asleep at 5:15 PM, gently wake him — late naps push bedtime too late.',
@@ -116,7 +101,7 @@ const ALL_EVENTS = [
     startHour: 17.5,
     endHour: 18.5,
     title: 'Dinner',
-    icon: '🍜',
+    Icon: UtensilsCrossed,
     summary: 'Same mealtime rules apply.',
     details: [
       'High chair, always seated.',
@@ -130,7 +115,7 @@ const ALL_EVENTS = [
     startHour: 18,
     endHour: 19,
     title: 'Bedtime',
-    icon: '🌛',
+    Icon: BedDouble,
     summary: 'Bottle, books, crib.',
     details: [
       'Offer bottle or sippy cup, warmed.',
@@ -145,7 +130,7 @@ const ALL_EVENTS = [
     startHour: 21,
     endHour: 24,
     title: 'Overnight',
-    icon: '⭐',
+    Icon: Moon,
     summary: 'He almost always sleeps through.',
     details: [
       'He might fuss briefly — this happens maybe once every two weeks. Wait 1 minute; he almost always settles himself.',
@@ -178,9 +163,9 @@ function Card({ children, style = {} }) {
   return (
     <div style={{
       backgroundColor: CARD,
-      borderRadius: '20px',
-      padding: '16px 18px',
-      boxShadow: '0 2px 12px rgba(58,53,48,0.06)',
+      borderRadius: '8px',
+      padding: '14px 16px',
+      border: `1px solid ${BORDER}`,
       ...style,
     }}>
       {children}
@@ -190,7 +175,7 @@ function Card({ children, style = {} }) {
 
 function MealtimeRules({ expanded, onToggle }) {
   return (
-    <Card style={{ border: `1.5px solid ${BORDER}` }}>
+    <Card>
       <button
         onClick={onToggle}
         style={{
@@ -200,13 +185,17 @@ function MealtimeRules({ expanded, onToggle }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ fontSize: '20px' }}>🍽️</span>
-          <span style={{ fontSize: '15px', fontWeight: 700, color: TEXT }}>Mealtime rules</span>
+          <UtensilsCrossed size={16} color={TEXT_MUTED} strokeWidth={2} />
+          <span style={{ fontSize: '14px', fontWeight: 600, color: TEXT }}>Mealtime rules</span>
         </div>
-        <span style={{ fontSize: '18px', color: TEXT_MUTED, transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>›</span>
+        <ChevronDown
+          size={16}
+          color={TEXT_MUTED}
+          style={{ transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }}
+        />
       </button>
       {expanded && (
-        <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px', borderTop: `1px solid ${BORDER}`, paddingTop: '12px' }}>
           {[
             ['🪑', 'Always seated in high chair to eat'],
             ['🥶', 'Food on his middle fridge shelf only (or what Elizabeth makes)'],
@@ -215,8 +204,8 @@ function MealtimeRules({ expanded, onToggle }) {
             ['💧', 'Water from straw cup throughout the day'],
           ].map(([icon, text]) => (
             <div key={text} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <span style={{ fontSize: '15px', flexShrink: 0, marginTop: '1px' }}>{icon}</span>
-              <span style={{ fontSize: '14px', color: TEXT, lineHeight: '1.4' }}>{text}</span>
+              <span style={{ fontSize: '14px', flexShrink: 0, marginTop: '1px' }}>{icon}</span>
+              <span style={{ fontSize: '13px', color: TEXT, lineHeight: '1.4' }}>{text}</span>
             </div>
           ))}
         </div>
@@ -226,28 +215,25 @@ function MealtimeRules({ expanded, onToggle }) {
 }
 
 function TimelineEvent({ event, isActive, isCurrent, onToggle }) {
-  const dotColor = getDotColor(event.id)
-  const cardBg = isCurrent ? SAGE_LIGHT : getCardBg(event.id)
+  const { Icon } = event
 
   return (
     <div
       id={`event-${event.id}`}
-      style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}
+      style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}
     >
       {/* Timeline spine */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, paddingTop: '18px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, paddingTop: '16px' }}>
         <div style={{
-          width: '12px', height: '12px', borderRadius: '50%', flexShrink: 0,
-          backgroundColor: dotColor,
-          border: isCurrent ? `3px solid ${dotColor}` : `2px solid ${dotColor}`,
-          boxShadow: isCurrent ? `0 0 0 3px ${dotColor}30` : 'none',
-          transition: 'all 0.3s',
+          width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0,
+          backgroundColor: isCurrent ? TERRA : BORDER,
+          transition: 'background-color 0.3s',
         }} />
-        <div style={{ width: '2px', flex: 1, minHeight: '24px', backgroundColor: BORDER, marginTop: '4px' }} />
+        <div style={{ width: '1px', flex: 1, minHeight: '24px', backgroundColor: BORDER, marginTop: '4px' }} />
       </div>
 
       {/* Card */}
-      <div style={{ flex: 1, paddingBottom: '12px' }}>
+      <div style={{ flex: 1, paddingBottom: '10px' }}>
         <button
           onClick={onToggle}
           style={{
@@ -256,36 +242,41 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle }) {
           }}
         >
           <Card style={{
-            border: isCurrent ? `2px solid ${SAGE}` : `1.5px solid ${BORDER}`,
-            backgroundColor: cardBg,
-            transition: 'all 0.3s',
+            borderLeft: isCurrent ? `3px solid ${TERRA}` : `1px solid ${BORDER}`,
+            paddingLeft: isCurrent ? '13px' : '16px',
+            transition: 'border-left 0.3s',
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div style={{ flex: 1 }}>
                 <div style={{
-                  fontSize: '12px', fontWeight: 600, color: isCurrent ? SAGE : TEXT_MUTED,
-                  letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '4px',
+                  fontSize: '12px', fontWeight: 600, color: TEXT_MUTED,
+                  letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px',
                 }}>
                   {event.time}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '18px' }}>{event.icon}</span>
-                  <span style={{ fontSize: '16px', fontWeight: 700, color: TEXT }}>{event.title}</span>
+                  <Icon size={16} color={isCurrent ? TERRA : TEXT_MUTED} strokeWidth={2} />
+                  <span style={{ fontSize: '16px', fontWeight: 600, color: TEXT }}>{event.title}</span>
                 </div>
-                <div style={{ fontSize: '13px', color: TEXT_MUTED, marginTop: '4px' }}>{event.summary}</div>
+                <div style={{ fontSize: '13px', color: TEXT_MUTED, marginTop: '4px', lineHeight: '1.4' }}>{event.summary}</div>
               </div>
-              <span style={{
-                fontSize: '18px', color: TEXT_MUTED, marginLeft: '8px', flexShrink: 0,
-                transform: isActive ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s',
-              }}>›</span>
+              <ChevronDown
+                size={16}
+                color={TEXT_MUTED}
+                style={{
+                  marginLeft: '8px', flexShrink: 0, marginTop: '2px',
+                  transform: isActive ? 'rotate(180deg)' : 'none',
+                  transition: 'transform 0.2s',
+                }}
+              />
             </div>
 
             {isActive && (
-              <div style={{ marginTop: '14px', borderTop: `1px solid ${isCurrent ? SAGE : BORDER}`, paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ marginTop: '12px', borderTop: `1px solid ${BORDER}`, paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {event.details.map((d, i) => (
                   <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                    <span style={{ color: SAGE, fontWeight: 700, flexShrink: 0, fontSize: '14px', marginTop: '1px' }}>·</span>
-                    <span style={{ fontSize: '14px', color: TEXT, lineHeight: '1.5' }}>{d}</span>
+                    <span style={{ color: TERRA, fontWeight: 700, flexShrink: 0, fontSize: '14px', marginTop: '1px', lineHeight: 1.4 }}>–</span>
+                    <span style={{ fontSize: '13px', color: TEXT, lineHeight: '1.5' }}>{d}</span>
                   </div>
                 ))}
               </div>
@@ -335,8 +326,8 @@ export default function LincolnTab() {
             <h1 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: TEXT, fontFamily: 'Nunito, sans-serif', lineHeight: 1.2 }}>
               {getGreeting()}
             </h1>
-            <p style={{ margin: '4px 0 0', fontSize: '15px', color: TEXT_MUTED, fontFamily: 'Nunito, sans-serif' }}>
-              Here's Lincoln's day. 🌿
+            <p style={{ margin: '4px 0 0', fontSize: '14px', color: TEXT_MUTED, fontFamily: 'Nunito, sans-serif' }}>
+              Here's Lincoln's day.
             </p>
           </div>
           <div style={{ textAlign: 'right', flexShrink: 0 }}>
@@ -348,11 +339,10 @@ export default function LincolnTab() {
         <div style={{ display: 'flex', gap: '10px', marginTop: '14px', alignItems: 'center' }}>
           <button
             onClick={jumpToNow}
-            className="jump-now-btn"
             style={{
-              backgroundColor: SAGE, color: '#fff', border: 'none', borderRadius: '100px',
-              padding: '8px 18px', fontSize: '13px', fontWeight: 700, cursor: 'pointer',
-              fontFamily: 'Nunito, sans-serif',
+              backgroundColor: TERRA, color: CARD, border: 'none', borderRadius: '6px',
+              padding: '8px 16px', fontSize: '13px', fontWeight: 700, cursor: 'pointer',
+              fontFamily: 'Nunito, sans-serif', letterSpacing: '0.01em',
             }}
           >
             Jump to Now →
@@ -363,7 +353,7 @@ export default function LincolnTab() {
             <span
               onClick={() => setOneNap(v => !v)}
               style={{
-                fontSize: '13px', fontWeight: 700,
+                fontSize: '13px', fontWeight: 600,
                 color: oneNap ? TEXT : TEXT_MUTED,
                 fontFamily: 'Nunito, sans-serif',
                 userSelect: 'none', cursor: 'pointer',
@@ -378,7 +368,7 @@ export default function LincolnTab() {
               aria-checked={oneNap}
               style={{
                 width: '44px', height: '26px', borderRadius: '100px',
-                backgroundColor: oneNap ? '#5A9470' : '#C8C5C0',
+                backgroundColor: oneNap ? TERRA : BORDER,
                 border: 'none', cursor: 'pointer', padding: 0,
                 position: 'relative', flexShrink: 0,
                 transition: 'background-color 0.25s ease',
@@ -391,7 +381,7 @@ export default function LincolnTab() {
                 position: 'absolute', top: '3px',
                 left: oneNap ? '21px' : '3px',
                 transition: 'left 0.25s ease',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.25)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
               }} />
             </button>
           </div>
@@ -400,11 +390,12 @@ export default function LincolnTab() {
 
       {oneNap && (
         <div style={{
-          backgroundColor: '#FDF3EE', border: '1.5px solid #E8C9BE', borderRadius: '14px',
-          padding: '12px 14px', fontSize: '13px', color: '#C4795A', fontWeight: 600,
+          backgroundColor: CARD, border: `1px solid ${BORDER}`, borderLeft: `3px solid ${TERRA}`,
+          borderRadius: '8px', padding: '12px 14px 12px 13px',
+          fontSize: '13px', color: TEXT_MUTED, fontWeight: 600,
           display: 'flex', gap: '8px', alignItems: 'flex-start',
         }}>
-          <span>☝️</span>
+          <span style={{ color: TERRA, flexShrink: 0 }}>—</span>
           <span>One-nap day: the second nap and late afternoon snack have been removed from the schedule.</span>
         </div>
       )}
@@ -413,7 +404,11 @@ export default function LincolnTab() {
       <MealtimeRules expanded={rulesOpen} onToggle={() => setRulesOpen(v => !v)} />
 
       {/* Section label */}
-      <div style={{ fontSize: '12px', color: TEXT_MUTED, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', paddingLeft: '26px' }}>
+      <div style={{
+        fontSize: '11px', color: TEXT_MUTED, fontWeight: 700,
+        letterSpacing: '0.12em', textTransform: 'uppercase',
+        paddingLeft: '20px',
+      }}>
         Today's schedule
       </div>
 
@@ -428,12 +423,12 @@ export default function LincolnTab() {
             onToggle={() => toggleEvent(event.id)}
           />
         ))}
-        {/* End dot */}
-        <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+        {/* End marker */}
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, paddingTop: '4px' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: BORDER }} />
+            <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: BORDER }} />
           </div>
-          <p style={{ fontSize: '13px', color: TEXT_MUTED, margin: 0, paddingTop: '2px', fontStyle: 'italic' }}>Sweet dreams, Lincoln 🌙</p>
+          <p style={{ fontSize: '12px', color: TEXT_MUTED, margin: 0, paddingTop: '1px', fontStyle: 'italic' }}>Sweet dreams, Lincoln.</p>
         </div>
       </div>
     </div>
