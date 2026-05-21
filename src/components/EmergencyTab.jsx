@@ -183,6 +183,23 @@ export default function EmergencyTab() {
         number="(404) 555-0199"
         note="Call us first and we'll help coordinate."
       />
+
+      <Card style={{
+        backgroundColor: ALERT_LIGHT,
+        border: `1px solid ${BORDER}`,
+        borderLeft: `3px solid ${ALERT}`,
+        paddingLeft: '13px',
+      }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+          <AlertTriangle size={15} color={ALERT} strokeWidth={2} style={{ flexShrink: 0, marginTop: '2px' }} />
+          <div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: ALERT, marginBottom: '4px' }}>Emergency vet</div>
+            <p style={{ margin: 0, fontSize: '13px', color: ALERT_TEXT, lineHeight: '1.45' }}>
+              Find the nearest open emergency vet and text us immediately.
+            </p>
+          </div>
+        </div>
+      </Card>
     </div>
   )
 }

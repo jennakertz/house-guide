@@ -185,14 +185,7 @@ export default function SpritzTab() {
           <Row
             icon={Stethoscope}
             title="Non-emergency: Good Vets"
-            detail="Call us first and we'll help coordinate."
-          />
-          <div style={{ height: '1px', backgroundColor: BORDER }} />
-          <Row
-            icon={AlertTriangle}
-            title="Emergency vet"
-            detail="Find the nearest open emergency vet and text us immediately."
-            accent={ALERT}
+            detail="Call us first and we'll help coordinate. Full contact info in the SOS tab."
           />
         </div>
       </Card>

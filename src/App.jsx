@@ -62,9 +62,9 @@ export default function App() {
                   backgroundColor: isEmergency ? NAV_SOS : NAV_ACTIVE,
                 }}/>
               )}
-              <Icon size={22} color={iconColor} strokeWidth={isActive ? 2.25 : 1.75} />
+              <Icon size={22} color={iconColor} strokeWidth={isActive ? 2.5 : 2.25} />
               <span style={{
-                fontSize: '11px', fontWeight: isActive ? 700 : 500,
+                fontSize: '11px', fontWeight: isActive ? 700 : 600,
                 color: iconColor, fontFamily: 'Nunito, sans-serif', letterSpacing: '0.01em',
               }}>
                 {tab.label}

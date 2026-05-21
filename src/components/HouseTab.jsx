@@ -101,7 +101,7 @@ export default function HouseTab() {
       />
 
       {/* Closing note */}
-      <Card style={{ textAlign: 'center' }}>
+      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
         <p style={{ margin: 0, fontSize: '14px', color: TEXT_MUTED, lineHeight: '1.6', fontWeight: 500 }}>
           We're so grateful you're here.<br />
           Don't hesitate to text us — no question is too small.
