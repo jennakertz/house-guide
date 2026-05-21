@@ -6,9 +6,19 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+@keyframes sonar-ping {
+  0%   { box-shadow: 0 2px 8px rgba(123,175,138,0.35), 0 0 0 0 rgba(90,148,112,0.45); }
+  70%  { box-shadow: 0 2px 8px rgba(123,175,138,0.35), 0 0 0 12px rgba(90,148,112,0); }
+  100% { box-shadow: 0 2px 8px rgba(123,175,138,0.35), 0 0 0 0 rgba(90,148,112,0); }
+}
+
+.jump-now-btn {
+  animation: sonar-ping 2.5s ease-out infinite;
+}
+
 body {
   font-family: 'Nunito', sans-serif;
-  background-color: #FAF8F4;
+  background-color: #FAF7F2;
   color: #3A3530;
   margin: 0;
   padding: 0;
