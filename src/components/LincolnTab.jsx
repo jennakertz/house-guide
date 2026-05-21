@@ -7,6 +7,21 @@ const TEXT_MUTED = '#7A746E'
 const BORDER = '#EBE8E3'
 const CARD = '#FFFFFF'
 
+const SLEEP_IDS = new Set(['nap1', 'nap2', 'bedtime', 'overnight'])
+const MEAL_IDS  = new Set(['wake', 'breakfast', 'lunch', 'snack', 'dinner'])
+
+function getCardBg(id) {
+  if (SLEEP_IDS.has(id)) return '#EEF4FB'
+  if (MEAL_IDS.has(id))  return '#FDF6EE'
+  return CARD
+}
+
+function getDotColor(id) {
+  if (SLEEP_IDS.has(id)) return '#5B8DB8'
+  if (MEAL_IDS.has(id))  return '#5A9470'
+  return '#C4795A'
+}
+
 const ALL_EVENTS = [
   {
     id: 'wake',
@@ -211,6 +226,9 @@ function MealtimeRules({ expanded, onToggle }) {
 }
 
 function TimelineEvent({ event, isActive, isCurrent, onToggle }) {
+  const dotColor = getDotColor(event.id)
+  const cardBg = isCurrent ? SAGE_LIGHT : getCardBg(event.id)
+
   return (
     <div
       id={`event-${event.id}`}
@@ -220,9 +238,9 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle }) {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, paddingTop: '18px' }}>
         <div style={{
           width: '12px', height: '12px', borderRadius: '50%', flexShrink: 0,
-          backgroundColor: isCurrent ? SAGE : (isActive ? SAGE : BORDER),
-          border: isCurrent ? `3px solid ${SAGE}` : `2px solid ${isCurrent || isActive ? SAGE : BORDER}`,
-          boxShadow: isCurrent ? `0 0 0 3px ${SAGE_LIGHT}` : 'none',
+          backgroundColor: dotColor,
+          border: isCurrent ? `3px solid ${dotColor}` : `2px solid ${dotColor}`,
+          boxShadow: isCurrent ? `0 0 0 3px ${dotColor}30` : 'none',
           transition: 'all 0.3s',
         }} />
         <div style={{ width: '2px', flex: 1, minHeight: '24px', backgroundColor: BORDER, marginTop: '4px' }} />
@@ -239,7 +257,7 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle }) {
         >
           <Card style={{
             border: isCurrent ? `2px solid ${SAGE}` : `1.5px solid ${BORDER}`,
-            backgroundColor: isCurrent ? SAGE_LIGHT : CARD,
+            backgroundColor: cardBg,
             transition: 'all 0.3s',
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -330,30 +348,53 @@ export default function LincolnTab() {
         <div style={{ display: 'flex', gap: '10px', marginTop: '14px', alignItems: 'center' }}>
           <button
             onClick={jumpToNow}
+            className="jump-now-btn"
             style={{
               backgroundColor: SAGE, color: '#fff', border: 'none', borderRadius: '100px',
               padding: '8px 18px', fontSize: '13px', fontWeight: 700, cursor: 'pointer',
-              fontFamily: 'Nunito, sans-serif', boxShadow: '0 2px 8px rgba(123,175,138,0.35)',
+              fontFamily: 'Nunito, sans-serif',
             }}
           >
             Jump to Now →
           </button>
 
-          <button
-            onClick={() => setOneNap(v => !v)}
-            style={{
-              backgroundColor: oneNap ? '#E8C9BE' : '#F0EDE8',
-              border: `1.5px solid ${oneNap ? '#C4795A' : BORDER}`,
-              color: oneNap ? '#C4795A' : TEXT_MUTED,
-              borderRadius: '100px', padding: '7px 14px',
-              fontSize: '13px', fontWeight: 700, cursor: 'pointer',
-              fontFamily: 'Nunito, sans-serif', display: 'flex', alignItems: 'center', gap: '6px',
-              transition: 'all 0.2s',
-            }}
-          >
-            <span style={{ fontSize: '14px' }}>{oneNap ? '✓' : '○'}</span>
-            One nap today
-          </button>
+          {/* One nap toggle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span
+              onClick={() => setOneNap(v => !v)}
+              style={{
+                fontSize: '13px', fontWeight: 700,
+                color: oneNap ? TEXT : TEXT_MUTED,
+                fontFamily: 'Nunito, sans-serif',
+                userSelect: 'none', cursor: 'pointer',
+                transition: 'color 0.2s',
+              }}
+            >
+              One nap today
+            </span>
+            <button
+              onClick={() => setOneNap(v => !v)}
+              role="switch"
+              aria-checked={oneNap}
+              style={{
+                width: '44px', height: '26px', borderRadius: '100px',
+                backgroundColor: oneNap ? '#5A9470' : '#C8C5C0',
+                border: 'none', cursor: 'pointer', padding: 0,
+                position: 'relative', flexShrink: 0,
+                transition: 'background-color 0.25s ease',
+                outline: 'none',
+              }}
+            >
+              <div style={{
+                width: '20px', height: '20px', borderRadius: '50%',
+                backgroundColor: '#FFFFFF',
+                position: 'absolute', top: '3px',
+                left: oneNap ? '21px' : '3px',
+                transition: 'left 0.25s ease',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.25)',
+              }} />
+            </button>
+          </div>
         </div>
       </div>
 

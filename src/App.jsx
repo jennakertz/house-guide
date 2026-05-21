@@ -16,7 +16,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('lincoln')
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', backgroundColor: '#FAF8F4' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', backgroundColor: '#FAF7F2' }}>
       {/* Tab content */}
       <div style={{ flex: 1, overflowY: 'auto', paddingBottom: '80px' }} className="no-scrollbar">
         {activeTab === 'lincoln'   && <LincolnTab />}
@@ -49,34 +49,28 @@ export default function App() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '10px 4px 12px',
+                padding: isEmergency ? '8px 6px 10px' : '10px 4px 12px',
                 border: 'none',
-                background: 'none',
+                background: isEmergency ? '#C0392B' : 'none',
                 cursor: 'pointer',
                 gap: '3px',
                 position: 'relative',
+                margin: isEmergency ? '5px 8px 5px' : 0,
+                borderRadius: isEmergency ? '12px' : 0,
+                boxShadow: isEmergency ? '0 2px 10px rgba(192,57,43,0.35)' : 'none',
               }}
             >
-              {/* Emergency dot indicator */}
-              {isEmergency && !isActive && (
-                <span style={{
-                  position: 'absolute', top: '8px', right: 'calc(50% - 14px)',
-                  width: '7px', height: '7px', borderRadius: '50%',
-                  backgroundColor: '#C45A5A',
-                  border: '1.5px solid #fff',
-                }}/>
-              )}
               <span style={{ fontSize: '22px', lineHeight: 1 }}>{tab.emoji}</span>
               <span style={{
                 fontSize: '11px',
                 fontWeight: isActive ? 700 : 500,
-                color: isActive ? tab.color : '#7A746E',
+                color: isEmergency ? '#FFFFFF' : (isActive ? tab.color : '#7A746E'),
                 fontFamily: 'Nunito, sans-serif',
                 letterSpacing: '0.01em',
               }}>
                 {tab.label}
               </span>
-              {isActive && (
+              {isActive && !isEmergency && (
                 <span style={{
                   position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
                   width: '24px', height: '3px', borderRadius: '2px 2px 0 0',
