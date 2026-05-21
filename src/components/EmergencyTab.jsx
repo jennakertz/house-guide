@@ -98,63 +98,7 @@ export default function EmergencyTab() {
         </p>
       </div>
 
-      {/* Call us first */}
-      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '4px' }}>
-          <Phone size={16} color={TERRA} strokeWidth={2} />
-          <div>
-            <div style={{ fontSize: '16px', fontWeight: 800, color: TEXT }}>Call us first</div>
-            <div style={{ fontSize: '13px', color: TEXT_MUTED }}>Viceroy Riviera Maya · June 14–19</div>
-          </div>
-        </div>
-        <div style={{ height: '1px', backgroundColor: BORDER, margin: '12px 0' }} />
-        <ParentContact name="Jenna" number="(404) 555-0101" />
-        <div style={{ height: '1px', backgroundColor: BORDER }} />
-        <ParentContact name="Josh" number="(404) 555-0102" />
-      </Card>
-
-      {/* Lincoln medical note */}
-      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-          <Heart size={15} color={TERRA} strokeWidth={2} style={{ flexShrink: 0, marginTop: '2px' }} />
-          <div>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: TERRA, marginBottom: '4px' }}>Lincoln's medical history</div>
-            <p style={{ margin: 0, fontSize: '13px', color: TEXT, lineHeight: '1.5' }}>
-              Lincoln was born with Tetralogy of Fallot and had open heart surgery at one week old.
-              He is healthy and thriving — this is just important context if any medical situation arises.
-            </p>
-          </div>
-        </div>
-      </Card>
-
-      <SectionLabel>Medical contacts</SectionLabel>
-
-      <ContactCard
-        Icon={Heart}
-        role="Lincoln — Cardiology"
-        name="Children's Healthcare of Atlanta"
-        number="(404) 256-2593"
-        note="Info also posted next to the old iPhone in the living room."
-      />
-
-      <ContactCard
-        Icon={Baby}
-        role="Lincoln — Pediatrician"
-        name="Dr. Brian Wynn · Peachtree Park Pediatrics"
-        number="(404) 237-0704"
-      />
-
-      <SectionLabel>Pet & general</SectionLabel>
-
-      <ContactCard
-        Icon={PawPrint}
-        role="Spritz — Regular Vet"
-        name="Good Vets"
-        number="(404) 555-0199"
-        note="Call us first and we'll help coordinate."
-      />
-
-      {/* 911 */}
+      {/* 911 — top of page */}
       <Card style={{
         backgroundColor: ALERT_LIGHT,
         border: `1px solid ${BORDER}`,
@@ -183,6 +127,62 @@ export default function EmergencyTab() {
           <Phone size={18} strokeWidth={2.5} /> Call 911
         </a>
       </Card>
+
+      {/* Call us first */}
+      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '4px' }}>
+          <Phone size={16} color={TERRA} strokeWidth={2} />
+          <div>
+            <div style={{ fontSize: '16px', fontWeight: 800, color: TEXT }}>Call us first</div>
+            <div style={{ fontSize: '13px', color: TEXT_MUTED }}>Viceroy Riviera Maya · June 14–19</div>
+          </div>
+        </div>
+        <div style={{ height: '1px', backgroundColor: BORDER, margin: '12px 0' }} />
+        <ParentContact name="Jenna" number="(573) 561-6782" />
+        <div style={{ height: '1px', backgroundColor: BORDER }} />
+        <ParentContact name="Josh" number="(540) 871-3501" />
+      </Card>
+
+      <SectionLabel>Medical contacts</SectionLabel>
+
+      {/* Lincoln medical history — lives inside this section */}
+      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+          <Heart size={15} color={TERRA} strokeWidth={2} style={{ flexShrink: 0, marginTop: '2px' }} />
+          <div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: TERRA, marginBottom: '4px' }}>Lincoln's medical history</div>
+            <p style={{ margin: 0, fontSize: '13px', color: TEXT, lineHeight: '1.5' }}>
+              Lincoln was born with Tetralogy of Fallot and had open heart surgery at one week old.
+              He is healthy and thriving — this is just important context if any medical situation arises.
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      <ContactCard
+        Icon={Heart}
+        role="Lincoln — Cardiology"
+        name="Children's Healthcare of Atlanta"
+        number="(404) 256-2593"
+        note="Info also posted next to the old iPhone in the living room."
+      />
+
+      <ContactCard
+        Icon={Baby}
+        role="Lincoln — Pediatrician"
+        name="Dr. Brian Wynn · Peachtree Park Pediatrics"
+        number="(404) 237-0704"
+      />
+
+      <SectionLabel>Pet & general</SectionLabel>
+
+      <ContactCard
+        Icon={PawPrint}
+        role="Spritz — Regular Vet"
+        name="Good Vets"
+        number="(404) 555-0199"
+        note="Call us first and we'll help coordinate."
+      />
     </div>
   )
 }

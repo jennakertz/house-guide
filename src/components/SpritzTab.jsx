@@ -37,7 +37,7 @@ function SectionLabel({ children }) {
 }
 
 function Row({ icon, title, detail, accent }) {
-  const LucideIcon = typeof icon === 'function' ? icon : null
+  const LucideIcon = typeof icon !== 'string' ? icon : null
   return (
     <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
       <div style={{ flexShrink: 0, width: '20px', marginTop: '2px', display: 'flex', justifyContent: 'center' }}>
