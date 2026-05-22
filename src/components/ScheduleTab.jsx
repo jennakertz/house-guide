@@ -577,7 +577,7 @@ export default function ScheduleTab() {
       </div>
 
       {/* Controls row */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <div data-tour="tour-schedule-controls" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <button
           onClick={jumpToNow}
           style={{

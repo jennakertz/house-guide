@@ -194,11 +194,13 @@ export default function HouseTab() {
       </div>
 
       {/* Segmented control */}
-      <SegmentedControl
-        options={[{ id: 'for-you', label: 'For You' }, { id: 'find-it', label: 'Find It' }, { id: 'schedule', label: 'Schedule' }]}
-        value={segment}
-        onChange={setSegment}
-      />
+      <div data-tour="tour-segment">
+        <SegmentedControl
+          options={[{ id: 'for-you', label: 'For You' }, { id: 'find-it', label: 'Find It' }, { id: 'schedule', label: 'Schedule' }]}
+          value={segment}
+          onChange={setSegment}
+        />
+      </div>
 
       {/* For You */}
       {segment === 'for-you' && (

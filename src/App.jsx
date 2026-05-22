@@ -6,6 +6,7 @@ import HouseTab from './components/HouseTab'
 import EmergencyTab from './components/EmergencyTab'
 import ActivitiesTab from './components/ActivitiesTab'
 import SplashScreen from './components/SplashScreen'
+import TourOverlay from './components/TourOverlay'
 
 const TABS = [
   { id: 'schedule',   label: 'Schedule', Icon: CalendarDays },
@@ -19,12 +20,25 @@ const INACTIVE = 'rgba(255,255,255,0.55)'
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem('splashSeen'))
+  const [showTour, setShowTour] = useState(false)
   const [activeTab, setActiveTab] = useState('schedule')
   const [navVisible, setNavVisible] = useState(true)
 
   const handleDismiss = useCallback(() => {
     sessionStorage.setItem('splashSeen', '1')
     setShowSplash(false)
+    if (!sessionStorage.getItem('tourSeen')) setShowTour(true)
+  }, [])
+
+  const handleTourDismiss = useCallback(() => {
+    sessionStorage.setItem('tourSeen', '1')
+    setShowTour(false)
+  }, [])
+
+  const handleTourTabChange = useCallback((tabId) => {
+    setActiveTab(tabId)
+    setNavVisible(true)
+    lastScrollY.current = 0
   }, [])
   const lastScrollY = useRef(0)
   const scrollRef = useRef(null)
@@ -67,6 +81,7 @@ export default function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
       {showSplash && <SplashScreen onDismiss={handleDismiss} />}
+      {showTour && <TourOverlay onDismiss={handleTourDismiss} onTabChange={handleTourTabChange} />}
       {/* Scrollable content */}
       <div
         ref={scrollRef}
@@ -86,6 +101,7 @@ export default function App() {
 
       {/* Floating pill nav */}
       <nav
+        data-tour="tour-nav"
         style={{
           position: 'fixed',
           bottom: 'calc(20px + env(safe-area-inset-bottom))',
