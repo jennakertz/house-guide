@@ -19,6 +19,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('schedule')
   const [navVisible, setNavVisible] = useState(true)
   const lastScrollY = useRef(0)
+  const scrollRef = useRef(null)
 
   const handleScroll = useCallback((e) => {
     const y = e.currentTarget.scrollTop
@@ -35,12 +36,14 @@ export default function App() {
     setActiveTab(tabId)
     setNavVisible(true)
     lastScrollY.current = 0
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
       {/* Scrollable content */}
       <div
+        ref={scrollRef}
         className="no-scrollbar"
         onScroll={handleScroll}
         style={{
