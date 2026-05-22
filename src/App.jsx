@@ -39,7 +39,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+    const el = scrollRef.current
+    if (!el) return
+    const t = setTimeout(() => { el.scrollTop = 0 }, 0)
+    return () => clearTimeout(t)
   }, [activeTab])
 
   return (
@@ -52,6 +55,7 @@ export default function App() {
         style={{
           flex: 1,
           overflowY: 'auto',
+          scrollBehavior: 'smooth',
           paddingBottom: 'calc(96px + env(safe-area-inset-bottom))',
         }}
       >
