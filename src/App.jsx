@@ -46,7 +46,7 @@ export default function App() {
   }, [activeTab])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
       {/* Scrollable content */}
       <div
         ref={scrollRef}
@@ -54,6 +54,7 @@ export default function App() {
         onScroll={handleScroll}
         style={{
           flex: 1,
+          minHeight: 0,
           overflowY: 'auto',
           scrollBehavior: 'smooth',
           paddingBottom: 'calc(96px + env(safe-area-inset-bottom))',
