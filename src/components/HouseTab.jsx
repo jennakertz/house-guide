@@ -1,112 +1,177 @@
-import { User, Thermometer, Leaf, UtensilsCrossed, BedDouble } from 'lucide-react'
+import { useState } from 'react'
+import {
+  Home, BedDouble, Wifi, Thermometer, Leaf, User,
+  Utensils, UtensilsCrossed, Coffee, Baby, Moon,
+  Heart, Smartphone, ShoppingBag, Star, Footprints, Plus,
+} from 'lucide-react'
 
-const TERRA      = '#B85C38'
-const TEXT       = '#2C1A12'
-const TEXT_MUTED = '#7A5C4E'
-const BORDER     = '#D9CABF'
-const CARD       = '#FAF6F1'
+const C = {
+  text:    '#1A1612',
+  muted:   '#8A8078',
+  border:  '#E8E4DE',
+  card:    '#FFFFFF',
+  bg:      '#F5F3EF',
+  divider: '#EDE9E3',
+}
 
-function Card({ children, style = {} }) {
+function SectionLabel({ children }) {
   return (
     <div style={{
-      backgroundColor: CARD, borderRadius: '8px',
-      padding: '14px 16px', border: `1px solid ${BORDER}`,
-      ...style,
+      fontSize: '10px', fontWeight: 500, color: C.muted,
+      letterSpacing: '0.12em', textTransform: 'uppercase',
     }}>
       {children}
     </div>
   )
 }
 
-function InfoCard({ Icon, title, items }) {
+function InfoCard({ Icon, title, children }) {
   return (
-    <Card>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-        <Icon size={15} color={TEXT_MUTED} strokeWidth={2} />
-        <span style={{ fontSize: '15px', fontWeight: 700, color: TEXT }}>{title}</span>
+    <div style={{
+      backgroundColor: C.card, borderRadius: '10px',
+      border: `1px solid ${C.border}`, padding: '16px',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+        <Icon size={18} strokeWidth={1.5} color={C.muted} />
+        <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>{title}</span>
       </div>
-      <div style={{
-        borderTop: `1px solid ${BORDER}`, paddingTop: '12px',
-        display: 'flex', flexDirection: 'column', gap: '8px',
+      <div style={{ fontSize: '14px', color: C.text, lineHeight: '1.6' }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function FindItem({ Icon, label, location }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: '12px',
+      backgroundColor: C.card, borderRadius: '10px',
+      border: `1px solid ${C.border}`, padding: '13px 16px',
+    }}>
+      <Icon size={18} strokeWidth={1.5} color={C.muted} style={{ flexShrink: 0 }} />
+      <span style={{ flex: 1, fontSize: '14px', fontWeight: 500, color: C.text }}>{label}</span>
+      <span style={{
+        fontSize: '13px', color: C.muted,
+        textAlign: 'right', maxWidth: '45%', lineHeight: '1.3',
       }}>
-        {items.map(([text, sub], i) => (
-          <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-            <span style={{ color: TERRA, fontWeight: 700, flexShrink: 0, fontSize: '14px', marginTop: '1px' }}>–</span>
-            <div>
-              <span style={{ fontSize: '13px', color: TEXT, lineHeight: '1.45' }}>{text}</span>
-              {sub && <div style={{ fontSize: '12px', color: TEXT_MUTED, marginTop: '2px' }}>{sub}</div>}
-            </div>
-          </div>
-        ))}
-      </div>
-    </Card>
+        {location}
+      </span>
+    </div>
+  )
+}
+
+function SegmentedControl({ options, value, onChange }) {
+  return (
+    <div style={{
+      display: 'flex', backgroundColor: C.bg,
+      borderRadius: '8px', padding: '3px',
+      border: `1px solid ${C.border}`,
+    }}>
+      {options.map(opt => {
+        const active = value === opt.id
+        return (
+          <button
+            key={opt.id}
+            onClick={() => onChange(opt.id)}
+            style={{
+              flex: 1, padding: '8px 12px', borderRadius: '6px',
+              border: 'none', cursor: 'pointer',
+              backgroundColor: active ? C.card : 'transparent',
+              color: active ? C.text : C.muted,
+              fontSize: '14px', fontWeight: active ? 500 : 400,
+              fontFamily: 'DM Sans, sans-serif',
+              boxShadow: active ? '0 1px 4px rgba(0,0,0,0.07)' : 'none',
+              transition: 'all 0.15s',
+            }}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
+    </div>
   )
 }
 
 export default function HouseTab() {
+  const [segment, setSegment] = useState('for-you')
+
   return (
-    <div style={{ padding: '20px 16px 8px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div style={{ padding: '24px 16px 8px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+      {/* Header */}
       <div>
-        <h1 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: TEXT, fontFamily: 'Nunito, sans-serif', lineHeight: 1.2 }}>
-          Welcome home.
+        <h1
+          className="serif"
+          style={{ fontSize: '26px', fontWeight: 400, color: C.text, lineHeight: 1.2 }}
+        >
+          The house.
         </h1>
-        <p style={{ margin: '4px 0 0', fontSize: '14px', color: TEXT_MUTED }}>
-          Everything you need to know about the house.
+        <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>
+          Everything you need.
         </p>
       </div>
 
-      <InfoCard
-        Icon={User}
-        title="Elizabeth, the nanny"
-        items={[
-          ['She\'s here Monday through Thursday — Friday is a holiday.'],
-          ['She handles food prep, bottle prep, and laundry.'],
-          ['You decide how much childcare help you\'d like from her — totally up to you!'],
-        ]}
+      {/* Segmented control */}
+      <SegmentedControl
+        options={[{ id: 'for-you', label: 'For You' }, { id: 'find-it', label: 'Find It' }]}
+        value={segment}
+        onChange={setSegment}
       />
 
-      <InfoCard
-        Icon={Thermometer}
-        title="Temperature"
-        items={[
-          ['Feel free to adjust the thermostat however you\'d like.'],
-          ['Please keep it at or below 72°F — Lincoln sleeps best in a cooler room.'],
-        ]}
-      />
+      {/* For You */}
+      {segment === 'for-you' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <InfoCard Icon={Home} title="Welcome!">
+            Before you arrive, please send us a grocery list so we can stock the kitchen for you. Help yourself to anything in there.
+          </InfoCard>
 
-      <InfoCard
-        Icon={Leaf}
-        title="Herb garden"
-        items={[
-          ['Please water the herb garden outside as needed — they\'re thirsty little guys!'],
-        ]}
-      />
+          <InfoCard Icon={BedDouble} title="Your room">
+            Your bed is made up with fresh linens. Towels and washcloths are ready for you.
+          </InfoCard>
 
-      <InfoCard
-        Icon={UtensilsCrossed}
-        title="Kitchen"
-        items={[
-          ['Help yourself to anything — the kitchen is yours!'],
-          ['If you can, send us a grocery list before you arrive so we can stock up for you.'],
-        ]}
-      />
+          <InfoCard Icon={Wifi} title="Wifi">
+            <span style={{ color: C.muted }}>Network:</span> <strong>[to be filled in]</strong>
+            <br />
+            <span style={{ color: C.muted }}>Password:</span> <strong>[to be filled in]</strong>
+          </InfoCard>
 
-      <InfoCard
-        Icon={BedDouble}
-        title="Your room"
-        items={[
-          ['The bed is made up with fresh linens.'],
-          ['Towels and washcloths are ready for you.'],
-        ]}
-      />
+          <InfoCard Icon={Thermometer} title="Temperature">
+            Adjust the thermostat to whatever is comfortable. Please keep it at or below 72°F — Lincoln sleeps best in a cooler room.
+          </InfoCard>
 
-      {/* Closing note */}
-      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
-        <p style={{ margin: 0, fontSize: '14px', color: TEXT_MUTED, lineHeight: '1.6', fontWeight: 500 }}>
-          We're so grateful you're here.<br />
-          Don't hesitate to text us — no question is too small.
-        </p>
-      </Card>
+          <InfoCard Icon={Leaf} title="Herb garden">
+            Please water the herb garden outside as needed — they're thirsty little guys.
+          </InfoCard>
+
+          <InfoCard Icon={User} title="Elizabeth (Nanny)">
+            Elizabeth is here Monday–Thursday (Friday is a holiday). She handles Lincoln's food prep, bottles, and laundry. You can decide how much additional childcare help you'd like from her.
+          </InfoCard>
+        </div>
+      )}
+
+      {/* Find It */}
+      {segment === 'find-it' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <SectionLabel>Lincoln</SectionLabel>
+          <FindItem Icon={ShoppingBag}      label="Lincoln's food"             location="Middle shelf, fridge" />
+          <FindItem Icon={UtensilsCrossed}  label="Utensils, bowls, plates"    location="Far right cabinet, pantry" />
+          <FindItem Icon={Coffee}           label="Bottle warmer"              location="Kitchen counter (instructions next to it)" />
+          <FindItem Icon={Baby}             label="Diapers"                    location="[to be filled in]" />
+          <FindItem Icon={Moon}             label="Sleep sacks"                location="[to be filled in]" />
+          <FindItem Icon={Heart}            label="Pacifiers"                  location="[to be filled in]" />
+          <FindItem Icon={Smartphone}       label="Nana app (baby monitor)"    location="Old iPhone downstairs · passcode 111111" />
+          <FindItem Icon={Plus}             label="Baby medicine"              location="[to be filled in]" />
+
+          <div style={{ marginTop: '8px' }}>
+            <SectionLabel>Spritz</SectionLabel>
+          </div>
+          <FindItem Icon={ShoppingBag}  label="Dog food (kibble)"  location="[to be filled in]" />
+          <FindItem Icon={Star}         label="Dog treats"         location="[to be filled in]" />
+          <FindItem Icon={Footprints}   label="Dog leash"          location="[to be filled in]" />
+        </div>
+      )}
+
     </div>
   )
 }

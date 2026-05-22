@@ -1,30 +1,20 @@
-import { Phone, Heart, Baby, PawPrint, AlertTriangle } from 'lucide-react'
+import { Phone, AlertTriangle, Heart, Baby, PawPrint, Stethoscope } from 'lucide-react'
 
-const TERRA       = '#B85C38'
-const ALERT       = '#C0392B'
-const ALERT_LIGHT = '#FBF0EE'
-const ALERT_TEXT  = '#8B2512'
-const TEXT        = '#2C1A12'
-const TEXT_MUTED  = '#7A5C4E'
-const BORDER      = '#D9CABF'
-const CARD        = '#FAF6F1'
-
-function Card({ children, style = {} }) {
-  return (
-    <div style={{
-      backgroundColor: CARD, borderRadius: '8px',
-      padding: '14px 16px', border: `1px solid ${BORDER}`,
-      ...style,
-    }}>
-      {children}
-    </div>
-  )
+const C = {
+  text:    '#1A1612',
+  muted:   '#8A8078',
+  border:  '#E8E4DE',
+  card:    '#FFFFFF',
+  bg:      '#F5F3EF',
+  sos:     '#C0392B',
+  amber:   '#B8860B',
+  amberBg: '#FFF8E8',
 }
 
 function SectionLabel({ children }) {
   return (
     <div style={{
-      fontSize: '11px', color: TEXT_MUTED, fontWeight: 700,
+      fontSize: '10px', fontWeight: 500, color: C.muted,
       letterSpacing: '0.12em', textTransform: 'uppercase',
     }}>
       {children}
@@ -32,136 +22,131 @@ function SectionLabel({ children }) {
   )
 }
 
-function CallButton({ number, label }) {
+function CallBtn({ number, label, variant = 'dark' }) {
+  const isDark = variant === 'dark'
+  const isRed  = variant === 'red'
   return (
     <a
-      href={`tel:${number.replace(/\D/g, '')}`}
+      href={`tel:+1${number.replace(/\D/g, '')}`}
       style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-        backgroundColor: TERRA, color: CARD,
-        border: 'none', borderRadius: '6px',
-        padding: '7px 14px', fontSize: '13px', fontWeight: 700,
-        textDecoration: 'none', fontFamily: 'Nunito, sans-serif', flexShrink: 0,
+        display: 'inline-flex', alignItems: 'center', gap: '6px',
+        backgroundColor: isRed ? C.sos : isDark ? C.text : '#F5F3EF',
+        color: (isRed || isDark) ? '#FFFFFF' : C.text,
+        border: (isRed || isDark) ? 'none' : `1px solid ${C.border}`,
+        borderRadius: '6px', padding: '9px 16px',
+        fontSize: '14px', fontWeight: 500,
+        textDecoration: 'none', fontFamily: 'DM Sans, sans-serif',
+        flexShrink: 0,
       }}
     >
-      <Phone size={13} strokeWidth={2.5} />
-      {label || 'Call'}
+      <Phone size={15} strokeWidth={1.5} />
+      {label}
     </a>
   )
 }
 
 function ContactCard({ Icon, role, name, number, note }) {
   return (
-    <Card>
+    <div style={{
+      backgroundColor: C.card, borderRadius: '10px',
+      border: `1px solid ${C.border}`, padding: '16px',
+    }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{
-            fontSize: '11px', fontWeight: 700, color: TEXT_MUTED,
-            letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px',
+            fontSize: '10px', fontWeight: 500, color: C.muted,
+            letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '6px',
           }}>
             {role}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <Icon size={15} color={TEXT_MUTED} strokeWidth={2} />
-            <span style={{ fontSize: '15px', fontWeight: 700, color: TEXT }}>{name}</span>
+            <Icon size={16} strokeWidth={1.5} color={C.muted} style={{ flexShrink: 0 }} />
+            <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>{name}</span>
           </div>
-          <div style={{ fontSize: '13px', color: TEXT_MUTED, marginBottom: note ? '4px' : 0 }}>{number}</div>
-          {note && <div style={{ fontSize: '12px', color: TEXT_MUTED, fontStyle: 'italic', lineHeight: '1.4' }}>{note}</div>}
+          <div style={{ fontSize: '13px', color: C.muted, marginBottom: note ? '6px' : 0 }}>
+            {number}
+          </div>
+          {note && (
+            <div style={{ fontSize: '13px', color: C.muted, fontStyle: 'italic', lineHeight: '1.4' }}>
+              {note}
+            </div>
+          )}
         </div>
-        <CallButton number={number} />
+        <CallBtn number={number} label="Call" variant="dark" />
       </div>
-    </Card>
-  )
-}
-
-function ParentContact({ name, number }) {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0' }}>
-      <div>
-        <div style={{ fontSize: '14px', fontWeight: 700, color: TEXT }}>{name}</div>
-        <div style={{ fontSize: '13px', color: TEXT_MUTED }}>{number}</div>
-      </div>
-      <CallButton number={number} label="Call" />
     </div>
   )
 }
 
 export default function EmergencyTab() {
   return (
-    <div style={{ padding: '20px 16px 8px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div style={{ padding: '24px 16px 8px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+      {/* Header */}
       <div>
-        <h1 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: TEXT, fontFamily: 'Nunito, sans-serif', lineHeight: 1.2 }}>
-          Contacts & emergencies
+        <h1
+          className="serif"
+          style={{ fontSize: '26px', fontWeight: 400, color: C.text, lineHeight: 1.2 }}
+        >
+          Contacts.
         </h1>
-        <p style={{ margin: '4px 0 0', fontSize: '14px', color: TEXT_MUTED }}>
+        <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>
           Call us first — we're always reachable.
         </p>
       </div>
 
-      {/* 911 — top of page */}
-      <Card style={{
-        backgroundColor: ALERT_LIGHT,
-        border: `1px solid ${BORDER}`,
-        borderLeft: `3px solid ${ALERT}`,
-        paddingLeft: '13px',
-        textAlign: 'center',
+      {/* Hero: We're in Mexico */}
+      <div style={{
+        backgroundColor: C.text, borderRadius: '10px', padding: '20px',
+        color: '#FFFFFF',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
-          <AlertTriangle size={16} color={ALERT} strokeWidth={2} />
-          <div style={{ fontSize: '15px', fontWeight: 700, color: ALERT }}>Fire · Police · Medical emergency</div>
+        <div style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>
+          We're in Mexico · June 14–19
         </div>
-        <div style={{ fontSize: '13px', color: ALERT_TEXT, marginBottom: '14px' }}>
+        <div style={{ fontSize: '15px', fontWeight: 500, marginBottom: '16px', color: 'rgba(255,255,255,0.85)' }}>
+          Viceroy Riviera Maya Resort
+        </div>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <CallBtn number="(573) 561-6782" label="Jenna" variant="light" />
+          <CallBtn number="(540) 871-3501" label="Josh"  variant="light" />
+        </div>
+      </div>
+
+      {/* 911 */}
+      <div style={{
+        backgroundColor: C.card, borderRadius: '10px',
+        border: `1px solid ${C.border}`,
+        borderLeft: `4px solid ${C.sos}`,
+        padding: '16px 16px 16px 14px',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+          <AlertTriangle size={18} strokeWidth={1.5} color={C.sos} />
+          <span style={{ fontSize: '15px', fontWeight: 500, color: C.sos }}>Emergency Services</span>
+        </div>
+        <p style={{ fontSize: '14px', color: C.muted, marginBottom: '14px', lineHeight: '1.4' }}>
           In any life-threatening situation, call 911 first.
-        </div>
-        <a
-          href="tel:911"
-          style={{
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-            backgroundColor: ALERT, color: '#FFFFFF',
-            border: 'none', borderRadius: '6px',
-            padding: '12px 40px', fontSize: '17px', fontWeight: 800,
-            textDecoration: 'none', fontFamily: 'Nunito, sans-serif',
-            letterSpacing: '0.02em',
-          }}
-        >
-          <Phone size={18} strokeWidth={2.5} /> Call 911
-        </a>
-      </Card>
+        </p>
+        <CallBtn number="911" label="Call 911" variant="red" />
+      </div>
 
-      {/* Call us first */}
-      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '4px' }}>
-          <Phone size={16} color={TERRA} strokeWidth={2} />
-          <div>
-            <div style={{ fontSize: '16px', fontWeight: 800, color: TEXT }}>Call us first</div>
-            <div style={{ fontSize: '13px', color: TEXT_MUTED }}>Viceroy Riviera Maya · June 14–19</div>
-          </div>
-        </div>
-        <div style={{ height: '1px', backgroundColor: BORDER, margin: '12px 0' }} />
-        <ParentContact name="Jenna" number="(573) 561-6782" />
-        <div style={{ height: '1px', backgroundColor: BORDER }} />
-        <ParentContact name="Josh" number="(540) 871-3501" />
-      </Card>
+      {/* Lincoln contacts */}
+      <SectionLabel>Lincoln</SectionLabel>
 
-      <SectionLabel>Medical contacts</SectionLabel>
-
-      {/* Lincoln medical history — lives inside this section */}
-      <Card style={{ borderLeft: `3px solid ${TERRA}`, paddingLeft: '13px' }}>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-          <Heart size={15} color={TERRA} strokeWidth={2} style={{ flexShrink: 0, marginTop: '2px' }} />
-          <div>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: TERRA, marginBottom: '4px' }}>Lincoln's medical history</div>
-            <p style={{ margin: 0, fontSize: '13px', color: TEXT, lineHeight: '1.5' }}>
-              Lincoln was born with Tetralogy of Fallot and had open heart surgery at one week old.
-              He is healthy and thriving — this is just important context if any medical situation arises.
-            </p>
-          </div>
-        </div>
-      </Card>
+      {/* Medical history note */}
+      <div style={{
+        backgroundColor: C.card, borderRadius: '10px',
+        border: `1px solid ${C.border}`,
+        borderLeft: `3px solid #B8A8CC`,
+        padding: '14px 14px 14px 13px',
+        fontSize: '13px', color: C.text, lineHeight: '1.5',
+      }}>
+        <div style={{ fontWeight: 500, color: C.text, marginBottom: '4px' }}>Medical history</div>
+        Lincoln was born with Tetralogy of Fallot and had open heart surgery at one week old. He is healthy and thriving — this is just important context in any medical situation.
+      </div>
 
       <ContactCard
-        Icon={Heart}
-        role="Lincoln — Cardiology"
+        Icon={Stethoscope}
+        role="Cardiologist"
         name="Children's Healthcare of Atlanta"
         number="(404) 256-2593"
         note="Info also posted next to the old iPhone in the living room."
@@ -169,37 +154,72 @@ export default function EmergencyTab() {
 
       <ContactCard
         Icon={Baby}
-        role="Lincoln — Pediatrician"
-        name="Dr. Brian Wynn · Peachtree Park Pediatrics"
+        role="Pediatrician"
+        name="Dr. Brian Wynn — Peachtree Park Pediatrics"
         number="(404) 237-0704"
       />
 
-      <SectionLabel>Pet & general</SectionLabel>
+      {/* Spritz contacts */}
+      <SectionLabel>Spritz</SectionLabel>
 
       <ContactCard
         Icon={PawPrint}
-        role="Spritz — Regular Vet"
+        role="Regular Vet"
         name="Good Vets"
         number="(404) 555-0199"
-        note="Call us first and we'll help coordinate."
+        note="Reach out to us first and we'll help coordinate."
       />
 
-      <Card style={{
-        backgroundColor: ALERT_LIGHT,
-        border: `1px solid ${BORDER}`,
-        borderLeft: `3px solid ${ALERT}`,
-        paddingLeft: '13px',
+      <div style={{
+        backgroundColor: C.card, borderRadius: '10px',
+        border: `1px solid ${C.border}`,
+        borderLeft: `3px solid ${C.sos}`,
+        padding: '14px 14px 14px 13px',
       }}>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-          <AlertTriangle size={15} color={ALERT} strokeWidth={2} style={{ flexShrink: 0, marginTop: '2px' }} />
-          <div>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: ALERT, marginBottom: '4px' }}>Emergency vet</div>
-            <p style={{ margin: 0, fontSize: '13px', color: ALERT_TEXT, lineHeight: '1.45' }}>
-              Find the nearest open emergency vet and text us immediately.
-            </p>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+          <AlertTriangle size={16} strokeWidth={1.5} color={C.sos} />
+          <span style={{ fontSize: '14px', fontWeight: 500, color: C.sos }}>Emergency Vet</span>
         </div>
-      </Card>
+        <p style={{ fontSize: '13px', color: C.text, lineHeight: '1.5' }}>
+          Go to the nearest open emergency vet and text us immediately.
+        </p>
+      </div>
+
+      {/* Sarah's dogs warning */}
+      <div style={{
+        backgroundColor: C.amberBg, borderRadius: '10px',
+        border: `1px solid ${C.border}`,
+        borderLeft: `4px solid ${C.amber}`,
+        padding: '16px 16px 16px 14px',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+          <AlertTriangle size={18} strokeWidth={1.5} color={C.amber} />
+          <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>Visiting Dogs</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {[
+            ["Josh's sister Sarah, her husband, and their two dogs are also visiting.", false],
+            ["One of Sarah's dogs bites.", true],
+            ["Sarah's dogs must be fully separated from Lincoln at all times. No exceptions.", false],
+            ["Sarah's dogs may not be left alone in the house — ever.", false],
+            ["Sarah is aware of these rules.", false],
+          ].map(([text, bold], i) => (
+            <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{
+                width: '4px', height: '4px', borderRadius: '50%',
+                backgroundColor: C.amber, flexShrink: 0, marginTop: '9px',
+              }} />
+              <span style={{
+                fontSize: '14px', color: C.text, lineHeight: '1.5',
+                fontWeight: bold ? 600 : 400,
+              }}>
+                {text}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   )
 }
