@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { CalendarDays, Home, Phone, Compass } from 'lucide-react'
 import { haptic } from './haptic'
 import ScheduleTab from './components/ScheduleTab'
@@ -36,8 +36,11 @@ export default function App() {
     setActiveTab(tabId)
     setNavVisible(true)
     lastScrollY.current = 0
-    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [activeTab])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
