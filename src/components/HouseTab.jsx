@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import {
   Home, BedDouble, Wifi, Thermometer, Leaf, User,
-  Utensils, UtensilsCrossed, Coffee, Baby, Moon,
-  Heart, Smartphone, ShoppingBag, Star, Footprints, Plus,
+  UtensilsCrossed, Coffee, Smartphone, Plus,
+  ShoppingBag, Star, Footprints, Package, Baby, ChevronDown,
 } from 'lucide-react'
 
 const C = {
@@ -42,21 +42,66 @@ function InfoCard({ Icon, title, children }) {
   )
 }
 
-function FindItem({ Icon, label, location }) {
+// steps prop makes the item expandable with numbered instructions
+function FindItem({ Icon, label, location, steps }) {
+  const [open, setOpen] = useState(false)
+  const expandable = !!steps
+
   return (
     <div style={{
-      display: 'flex', alignItems: 'center', gap: '12px',
       backgroundColor: C.card, borderRadius: '10px',
-      border: `1px solid ${C.border}`, padding: '13px 16px',
+      border: `1px solid ${C.border}`, overflow: 'hidden',
     }}>
-      <Icon size={18} strokeWidth={1.5} color={C.muted} style={{ flexShrink: 0 }} />
-      <span style={{ flex: 1, fontSize: '14px', fontWeight: 500, color: C.text }}>{label}</span>
-      <span style={{
-        fontSize: '13px', color: C.muted,
-        textAlign: 'right', maxWidth: '45%', lineHeight: '1.3',
-      }}>
-        {location}
-      </span>
+      <div
+        onClick={expandable ? () => setOpen(v => !v) : undefined}
+        style={{
+          display: 'flex', alignItems: 'center', gap: '12px',
+          padding: '13px 16px',
+          cursor: expandable ? 'pointer' : 'default',
+        }}
+      >
+        <Icon size={18} strokeWidth={1.5} color={C.muted} style={{ flexShrink: 0 }} />
+
+        {expandable ? (
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: '14px', fontWeight: 500, color: C.text }}>{label}</div>
+            <div style={{ fontSize: '13px', color: C.muted, marginTop: '1px' }}>{location}</div>
+          </div>
+        ) : (
+          <span style={{ flex: 1, fontSize: '14px', fontWeight: 500, color: C.text }}>{label}</span>
+        )}
+
+        {expandable ? (
+          <ChevronDown
+            size={15} strokeWidth={1.5} color={C.muted}
+            style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }}
+          />
+        ) : (
+          <span style={{ fontSize: '13px', color: C.muted, textAlign: 'right', maxWidth: '45%', lineHeight: '1.3' }}>
+            {location}
+          </span>
+        )}
+      </div>
+
+      {expandable && open && (
+        <div style={{ borderTop: `1px solid ${C.border}`, padding: '12px 16px 14px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {steps.map((step, i) => (
+              <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                <div style={{
+                  width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0,
+                  backgroundColor: C.bg, border: `1px solid ${C.border}`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '11px', fontWeight: 600, color: C.muted, marginTop: '1px',
+                }}>
+                  {i + 1}
+                </div>
+                <span style={{ fontSize: '14px', color: C.text, lineHeight: '1.5' }}>{step}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -145,7 +190,7 @@ export default function HouseTab() {
           </InfoCard>
 
           <InfoCard Icon={User} title="Elizabeth (Nanny)">
-            Elizabeth is here Monday–Thursday (Friday is a holiday). She handles Lincoln's food prep, bottles, and laundry. You can decide how much additional childcare help you'd like from her.
+            Elizabeth is here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry. You can decide how much additional childcare help you'd like from her.
           </InfoCard>
         </div>
       )}
@@ -154,21 +199,33 @@ export default function HouseTab() {
       {segment === 'find-it' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <SectionLabel>Lincoln</SectionLabel>
-          <FindItem Icon={ShoppingBag}      label="Lincoln's food"             location="Middle shelf, fridge" />
-          <FindItem Icon={UtensilsCrossed}  label="Utensils, bowls, plates"    location="Far right cabinet, pantry" />
-          <FindItem Icon={Coffee}           label="Bottle warmer"              location="Kitchen counter (instructions next to it)" />
-          <FindItem Icon={Baby}             label="Diapers"                    location="[to be filled in]" />
-          <FindItem Icon={Moon}             label="Sleep sacks"                location="[to be filled in]" />
-          <FindItem Icon={Heart}            label="Pacifiers"                  location="[to be filled in]" />
-          <FindItem Icon={Smartphone}       label="Nana app (baby monitor)"    location="Old iPhone downstairs · passcode 111111" />
-          <FindItem Icon={Plus}             label="Baby medicine"              location="[to be filled in]" />
+          <FindItem Icon={ShoppingBag}     label="Lincoln's food"          location="Middle shelf, fridge" />
+          <FindItem Icon={UtensilsCrossed} label="Baby feeding supplies"   location="Far right cabinet, pantry" />
+          <FindItem
+            Icon={Coffee}
+            label="Bottle warmer"
+            location="Kitchen counter"
+            steps={[
+              "Press the first button to turn it on.",
+              "Press the third button once for each ounce in the bottle (e.g., 6 times for a 6 oz bottle).",
+              'Press "Steady Warm."',
+            ]}
+          />
+          <FindItem Icon={Smartphone} label="Baby monitor (Nanit)"  location="Old iPhone downstairs · passcode 111111" />
+          <FindItem Icon={Plus}       label="Baby medicine"         location="Under the sink, baby's room" />
 
           <div style={{ marginTop: '8px' }}>
             <SectionLabel>Spritz</SectionLabel>
           </div>
-          <FindItem Icon={ShoppingBag}  label="Dog food (kibble)"  location="[to be filled in]" />
-          <FindItem Icon={Star}         label="Dog treats"         location="[to be filled in]" />
-          <FindItem Icon={Footprints}   label="Dog leash"          location="[to be filled in]" />
+          <FindItem Icon={ShoppingBag} label="Dog food (kibble)"            location="Pantry" />
+          <FindItem Icon={Star}        label="Dog treats & supplies"        location="Left cabinet, mudroom" />
+          <FindItem Icon={Footprints}  label="Spritz's leash"              location="Hallway closet" />
+
+          <div style={{ marginTop: '8px' }}>
+            <SectionLabel>On the go</SectionLabel>
+          </div>
+          <FindItem Icon={Package} label="Diaper bag"  location="Right cabinet, mudroom" />
+          <FindItem Icon={Baby}    label="Stroller"    location="Hallway closet" />
         </div>
       )}
 
