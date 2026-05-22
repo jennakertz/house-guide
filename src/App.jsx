@@ -39,16 +39,17 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const el = scrollRef.current
-    if (!el || el.scrollTop === 0) return
-    const start = el.scrollTop
+    const divStart = scrollRef.current?.scrollTop ?? 0
+    const winStart = window.scrollY ?? 0
+    if (divStart === 0 && winStart === 0) return
     const startTime = performance.now()
     const duration = 320
     let raf
     function step(now) {
       const p = Math.min((now - startTime) / duration, 1)
-      const ease = 1 - Math.pow(1 - p, 3) // ease-out cubic
-      el.scrollTop = start * (1 - ease)
+      const ease = 1 - Math.pow(1 - p, 3)
+      if (divStart > 0 && scrollRef.current) scrollRef.current.scrollTop = divStart * (1 - ease)
+      if (winStart > 0) window.scrollTo(0, winStart * (1 - ease))
       if (p < 1) raf = requestAnimationFrame(step)
     }
     raf = requestAnimationFrame(step)

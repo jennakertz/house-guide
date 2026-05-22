@@ -542,7 +542,6 @@ export default function ScheduleTab() {
     if (!scrollId) return
     haptic(50)
     setExpandedId(scrollId)
-    setCurrentId(nowId) // active treatment only for truly current events
     setTimeout(() => {
       const el = document.getElementById(`event-${scrollId}`)
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
