@@ -1,111 +1,177 @@
-const TEXT = '#3A3530'
-const TEXT_MUTED = '#7A746E'
-const BORDER = '#EBE8E3'
-const CARD = '#FFFFFF'
+import { useState } from 'react'
+import {
+  Home, BedDouble, Wifi, Thermometer, Leaf, User,
+  Utensils, UtensilsCrossed, Coffee, Baby, Moon,
+  Heart, Smartphone, ShoppingBag, Star, Footprints, Plus,
+} from 'lucide-react'
 
-function Card({ children, style = {} }) {
+const C = {
+  text:    '#1A1612',
+  muted:   '#8A8078',
+  border:  '#E8E4DE',
+  card:    '#FFFFFF',
+  bg:      '#F5F3EF',
+  divider: '#EDE9E3',
+}
+
+function SectionLabel({ children }) {
   return (
     <div style={{
-      backgroundColor: CARD, borderRadius: '20px', padding: '18px',
-      boxShadow: '0 2px 12px rgba(58,53,48,0.06)', ...style,
+      fontSize: '10px', fontWeight: 500, color: C.muted,
+      letterSpacing: '0.12em', textTransform: 'uppercase',
     }}>
       {children}
     </div>
   )
 }
 
-function InfoCard({ emoji, title, items, accent }) {
+function InfoCard({ Icon, title, children }) {
   return (
-    <Card style={{ border: `1.5px solid ${BORDER}` }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-        <div style={{
-          width: '40px', height: '40px', borderRadius: '12px',
-          backgroundColor: accent ? accent + '22' : '#F0EDE8',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0,
-        }}>
-          {emoji}
-        </div>
-        <span style={{ fontSize: '16px', fontWeight: 700, color: TEXT }}>{title}</span>
+    <div style={{
+      backgroundColor: C.card, borderRadius: '10px',
+      border: `1px solid ${C.border}`, padding: '16px',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+        <Icon size={18} strokeWidth={1.5} color={C.muted} />
+        <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>{title}</span>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {items.map(([text, sub], i) => (
-          <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-            <span style={{ color: '#7A746E', fontWeight: 700, flexShrink: 0, fontSize: '14px', marginTop: '2px' }}>·</span>
-            <div>
-              <span style={{ fontSize: '14px', color: TEXT, lineHeight: '1.45' }}>{text}</span>
-              {sub && <div style={{ fontSize: '13px', color: TEXT_MUTED, marginTop: '2px' }}>{sub}</div>}
-            </div>
-          </div>
-        ))}
+      <div style={{ fontSize: '14px', color: C.text, lineHeight: '1.6' }}>
+        {children}
       </div>
-    </Card>
+    </div>
+  )
+}
+
+function FindItem({ Icon, label, location }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: '12px',
+      backgroundColor: C.card, borderRadius: '10px',
+      border: `1px solid ${C.border}`, padding: '13px 16px',
+    }}>
+      <Icon size={18} strokeWidth={1.5} color={C.muted} style={{ flexShrink: 0 }} />
+      <span style={{ flex: 1, fontSize: '14px', fontWeight: 500, color: C.text }}>{label}</span>
+      <span style={{
+        fontSize: '13px', color: C.muted,
+        textAlign: 'right', maxWidth: '45%', lineHeight: '1.3',
+      }}>
+        {location}
+      </span>
+    </div>
+  )
+}
+
+function SegmentedControl({ options, value, onChange }) {
+  return (
+    <div style={{
+      display: 'flex', backgroundColor: C.bg,
+      borderRadius: '8px', padding: '3px',
+      border: `1px solid ${C.border}`,
+    }}>
+      {options.map(opt => {
+        const active = value === opt.id
+        return (
+          <button
+            key={opt.id}
+            onClick={() => onChange(opt.id)}
+            style={{
+              flex: 1, padding: '8px 12px', borderRadius: '6px',
+              border: 'none', cursor: 'pointer',
+              backgroundColor: active ? C.card : 'transparent',
+              color: active ? C.text : C.muted,
+              fontSize: '14px', fontWeight: active ? 500 : 400,
+              fontFamily: 'DM Sans, sans-serif',
+              boxShadow: active ? '0 1px 4px rgba(0,0,0,0.07)' : 'none',
+              transition: 'all 0.15s',
+            }}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
+    </div>
   )
 }
 
 export default function HouseTab() {
+  const [segment, setSegment] = useState('for-you')
+
   return (
-    <div style={{ padding: '20px 16px 8px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div style={{ padding: '24px 16px 8px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+      {/* Header */}
       <div>
-        <h1 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: TEXT, fontFamily: 'Nunito, sans-serif', lineHeight: 1.2 }}>
-          Welcome home 🏠
+        <h1
+          className="serif"
+          style={{ fontSize: '26px', fontWeight: 400, color: C.text, lineHeight: 1.2 }}
+        >
+          The house.
         </h1>
-        <p style={{ margin: '4px 0 0', fontSize: '15px', color: TEXT_MUTED }}>
-          Everything you need to know about the house.
+        <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>
+          Everything you need.
         </p>
       </div>
 
-      <InfoCard
-        emoji="👩"
-        title="Elizabeth, the nanny"
-        items={[
-          ['She\'s here Monday through Thursday — Friday is a holiday.'],
-          ['She handles food prep, bottle prep, and laundry.'],
-          ['You decide how much childcare help you\'d like from her — totally up to you!'],
-        ]}
+      {/* Segmented control */}
+      <SegmentedControl
+        options={[{ id: 'for-you', label: 'For You' }, { id: 'find-it', label: 'Find It' }]}
+        value={segment}
+        onChange={setSegment}
       />
 
-      <InfoCard
-        emoji="🌡️"
-        title="Temperature"
-        items={[
-          ['Feel free to adjust the thermostat however you\'d like.'],
-          ['Please keep it at or below 72°F — Lincoln sleeps best in a cooler room.'],
-        ]}
-      />
+      {/* For You */}
+      {segment === 'for-you' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <InfoCard Icon={Home} title="Welcome!">
+            Before you arrive, please send us a grocery list so we can stock the kitchen for you. Help yourself to anything in there.
+          </InfoCard>
 
-      <InfoCard
-        emoji="🌿"
-        title="Herb garden"
-        items={[
-          ['Please water the herb garden outside as needed — they\'re thirsty little guys!'],
-        ]}
-      />
+          <InfoCard Icon={BedDouble} title="Your room">
+            Your bed is made up with fresh linens. Towels and washcloths are ready for you.
+          </InfoCard>
 
-      <InfoCard
-        emoji="🍳"
-        title="Kitchen"
-        items={[
-          ['Help yourself to anything — the kitchen is yours!'],
-          ['If you can, send us a grocery list before you arrive so we can stock up for you.'],
-        ]}
-      />
+          <InfoCard Icon={Wifi} title="Wifi">
+            <span style={{ color: C.muted }}>Network:</span> <strong>[to be filled in]</strong>
+            <br />
+            <span style={{ color: C.muted }}>Password:</span> <strong>[to be filled in]</strong>
+          </InfoCard>
 
-      <InfoCard
-        emoji="🛏️"
-        title="Your room"
-        items={[
-          ['The bed is made up with fresh linens.'],
-          ['Towels and washcloths are ready for you.'],
-        ]}
-      />
+          <InfoCard Icon={Thermometer} title="Temperature">
+            Adjust the thermostat to whatever is comfortable. Please keep it at or below 72°F — Lincoln sleeps best in a cooler room.
+          </InfoCard>
 
-      {/* Warm closing note */}
-      <Card style={{ backgroundColor: '#F0F5F1', border: '1.5px solid #D2E4D9', textAlign: 'center' }}>
-        <p style={{ margin: 0, fontSize: '14px', color: '#5A7A62', lineHeight: '1.6', fontWeight: 500 }}>
-          We're so grateful you're here. 💚<br />
-          Don't hesitate to text us with anything — no question is too small.
-        </p>
-      </Card>
+          <InfoCard Icon={Leaf} title="Herb garden">
+            Please water the herb garden outside as needed — they're thirsty little guys.
+          </InfoCard>
+
+          <InfoCard Icon={User} title="Elizabeth (Nanny)">
+            Elizabeth is here Monday–Thursday (Friday is a holiday). She handles Lincoln's food prep, bottles, and laundry. You can decide how much additional childcare help you'd like from her.
+          </InfoCard>
+        </div>
+      )}
+
+      {/* Find It */}
+      {segment === 'find-it' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <SectionLabel>Lincoln</SectionLabel>
+          <FindItem Icon={ShoppingBag}      label="Lincoln's food"             location="Middle shelf, fridge" />
+          <FindItem Icon={UtensilsCrossed}  label="Utensils, bowls, plates"    location="Far right cabinet, pantry" />
+          <FindItem Icon={Coffee}           label="Bottle warmer"              location="Kitchen counter (instructions next to it)" />
+          <FindItem Icon={Baby}             label="Diapers"                    location="[to be filled in]" />
+          <FindItem Icon={Moon}             label="Sleep sacks"                location="[to be filled in]" />
+          <FindItem Icon={Heart}            label="Pacifiers"                  location="[to be filled in]" />
+          <FindItem Icon={Smartphone}       label="Nana app (baby monitor)"    location="Old iPhone downstairs · passcode 111111" />
+          <FindItem Icon={Plus}             label="Baby medicine"              location="[to be filled in]" />
+
+          <div style={{ marginTop: '8px' }}>
+            <SectionLabel>Spritz</SectionLabel>
+          </div>
+          <FindItem Icon={ShoppingBag}  label="Dog food (kibble)"  location="[to be filled in]" />
+          <FindItem Icon={Star}         label="Dog treats"         location="[to be filled in]" />
+          <FindItem Icon={Footprints}   label="Dog leash"          location="[to be filled in]" />
+        </div>
+      )}
+
     </div>
   )
 }
