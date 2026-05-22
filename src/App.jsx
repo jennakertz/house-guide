@@ -113,7 +113,7 @@ export default function App() {
           maxWidth: '400px',
           height: '62px',
           borderRadius: '22px',
-          backgroundColor: 'rgba(58, 54, 50, 0.88)',
+          backgroundColor: 'rgba(58, 54, 50, 0.78)',
           backdropFilter: 'blur(24px) saturate(1.4)',
           WebkitBackdropFilter: 'blur(24px) saturate(1.4)',
           border: '1px solid rgba(255, 255, 255, 0.10)',
