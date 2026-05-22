@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { haptic } from '../haptic'
 import {
-  Home, BedDouble, Wifi, Thermometer, Leaf, User, PawPrint,
+  Home, BedDouble, Wifi, Thermometer, Leaf, User, PawPrint, Trash2,
   UtensilsCrossed, Coffee, Smartphone, Plus,
   ShoppingBag, Star, Footprints, Package, Baby, ChevronDown,
 } from 'lucide-react'
@@ -197,7 +197,11 @@ export default function HouseTab() {
           </InfoCard>
 
           <InfoCard Icon={User} title="Elizabeth (Nanny)">
-            Elizabeth is here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry. You can decide how much additional childcare help you'd like from her.
+            Elizabeth is here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry, restock the diaper changing stations, and take out the diaper trash. You can decide how much additional childcare help you'd like from her.
+          </InfoCard>
+
+          <InfoCard Icon={Trash2} title="Trash">
+            Trash pickup is Tuesday morning. Pull the bins out to the street Monday night, and bring them back in Tuesday after the truck comes.
           </InfoCard>
 
           <div style={{
