@@ -205,7 +205,7 @@ export default function HouseTab() {
               <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>A note about the pups</span>
             </div>
             <p style={{ fontSize: '14px', color: C.text, lineHeight: '1.6' }}>
-              Just a reminder of what we flagged before we left — so glad Sarah didn't have to board them! We're at a stage where we're keeping Lincoln away from dogs (his movements are pretty unpredictable right now), so Sarah's dogs and Lincoln will need to stay separated the whole visit. And since Mylo tends to get anxious without Sarah around — which then gets Spritz going — the dogs really can't be left alone at the house. Sarah, just plan to have eyes on them the whole time. Thanks so much!
+              Just a reminder of what we flagged before we left — we're at a stage where we're keeping Lincoln away from dogs (his movements are pretty unpredictable right now), so Sarah's dogs and Lincoln will need to stay separated the whole visit. And since Mylo tends to get anxious without Sarah around — which then gets Spritz going — the dogs really can't be left alone at the house.
             </p>
           </div>
         </div>
