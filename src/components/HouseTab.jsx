@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import {
-  Home, BedDouble, Wifi, Thermometer, Leaf, User,
+  Home, BedDouble, Wifi, Thermometer, Leaf, User, PawPrint,
   UtensilsCrossed, Coffee, Smartphone, Plus,
   ShoppingBag, Star, Footprints, Package, Baby, ChevronDown,
 } from 'lucide-react'
@@ -191,6 +191,10 @@ export default function HouseTab() {
 
           <InfoCard Icon={User} title="Elizabeth (Nanny)">
             Elizabeth is here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry. You can decide how much additional childcare help you'd like from her.
+          </InfoCard>
+
+          <InfoCard Icon={PawPrint} title="Sarah's dogs">
+            Josh's sister Sarah is visiting with her husband and their two dogs — we're so glad everyone gets to be together! One thing to be aware of: one of her dogs can be unpredictable around small children, so we ask that her dogs and Lincoln stay in separate spaces throughout the visit. Please also make sure her dogs aren't left alone in the house. Sarah is fully aware of this and will be happy to help make it work.
           </InfoCard>
         </div>
       )}

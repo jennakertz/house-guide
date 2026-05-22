@@ -7,8 +7,6 @@ const C = {
   card:    '#FFFFFF',
   bg:      '#F5F3EF',
   sos:     '#C0392B',
-  amber:   '#B8860B',
-  amberBg: '#FFF8E8',
 }
 
 function SectionLabel({ children }) {
@@ -185,40 +183,6 @@ export default function EmergencyTab() {
         </p>
       </div>
 
-      {/* Sarah's dogs warning */}
-      <div style={{
-        backgroundColor: C.amberBg, borderRadius: '10px',
-        border: `1px solid ${C.border}`,
-        borderLeft: `4px solid ${C.amber}`,
-        padding: '16px 16px 16px 14px',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-          <AlertTriangle size={18} strokeWidth={1.5} color={C.amber} />
-          <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>Visiting Dogs</span>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {[
-            ["Josh's sister Sarah, her husband, and their two dogs are also visiting.", false],
-            ["One of Sarah's dogs bites.", true],
-            ["Sarah's dogs must be fully separated from Lincoln at all times. No exceptions.", false],
-            ["Sarah's dogs may not be left alone in the house — ever.", false],
-            ["Sarah is aware of these rules.", false],
-          ].map(([text, bold], i) => (
-            <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <div style={{
-                width: '4px', height: '4px', borderRadius: '50%',
-                backgroundColor: C.amber, flexShrink: 0, marginTop: '9px',
-              }} />
-              <span style={{
-                fontSize: '14px', color: C.text, lineHeight: '1.5',
-                fontWeight: bold ? 600 : 400,
-              }}>
-                {text}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
 
     </div>
   )
