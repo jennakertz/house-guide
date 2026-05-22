@@ -39,11 +39,20 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      if (scrollRef.current) scrollRef.current.scrollTop = 0
-      window.scrollTo(0, 0)
-    }, 0)
-    return () => clearTimeout(t)
+    const el = scrollRef.current
+    if (!el || el.scrollTop === 0) return
+    const start = el.scrollTop
+    const startTime = performance.now()
+    const duration = 320
+    let raf
+    function step(now) {
+      const p = Math.min((now - startTime) / duration, 1)
+      const ease = 1 - Math.pow(1 - p, 3) // ease-out cubic
+      el.scrollTop = start * (1 - ease)
+      if (p < 1) raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
   }, [activeTab])
 
   return (
@@ -55,9 +64,7 @@ export default function App() {
         onScroll={handleScroll}
         style={{
           flex: 1,
-          minHeight: 0,
           overflowY: 'auto',
-          scrollBehavior: 'smooth',
           paddingBottom: 'calc(96px + env(safe-area-inset-bottom))',
         }}
       >
