@@ -1,14 +1,16 @@
 import { useState, useRef, useCallback } from 'react'
-import { CalendarDays, Home, Phone } from 'lucide-react'
+import { CalendarDays, Home, Phone, Compass } from 'lucide-react'
 import { haptic } from './haptic'
 import ScheduleTab from './components/ScheduleTab'
 import HouseTab from './components/HouseTab'
 import EmergencyTab from './components/EmergencyTab'
+import ActivitiesTab from './components/ActivitiesTab'
 
 const TABS = [
-  { id: 'schedule',  label: 'Schedule', Icon: CalendarDays },
-  { id: 'house',     label: 'House',    Icon: Home },
-  { id: 'emergency', label: 'Contacts', Icon: Phone },
+  { id: 'schedule',   label: 'Schedule', Icon: CalendarDays },
+  { id: 'house',      label: 'House',    Icon: Home },
+  { id: 'activities', label: 'Explore',  Icon: Compass },
+  { id: 'emergency',  label: 'Contacts', Icon: Phone },
 ]
 
 const ACCENT = '#7EC8C8'
@@ -47,9 +49,10 @@ export default function App() {
           paddingBottom: 'calc(96px + env(safe-area-inset-bottom))',
         }}
       >
-        {activeTab === 'schedule'  && <ScheduleTab />}
-        {activeTab === 'house'     && <HouseTab />}
-        {activeTab === 'emergency' && <EmergencyTab />}
+        {activeTab === 'schedule'   && <ScheduleTab />}
+        {activeTab === 'house'      && <HouseTab />}
+        {activeTab === 'activities' && <ActivitiesTab />}
+        {activeTab === 'emergency'  && <EmergencyTab />}
       </div>
 
       {/* Floating pill nav */}
