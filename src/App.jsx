@@ -14,8 +14,8 @@ const TABS = [
   { id: 'emergency',  label: 'Contacts', Icon: Phone },
 ]
 
-const ACCENT = '#FFFFFF'
-const INACTIVE = 'rgba(255,255,255,0.6)'
+const ACCENT = '#7EC8C8'
+const INACTIVE = 'rgba(255,255,255,0.55)'
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem('splashSeen'))
@@ -97,15 +97,14 @@ export default function App() {
           maxWidth: '400px',
           height: '62px',
           borderRadius: '22px',
-          backgroundColor: 'rgba(100, 185, 185, 0.62)',
-          backdropFilter: 'blur(28px) saturate(1.6)',
-          WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
-          border: '1px solid rgba(255, 255, 255, 0.28)',
+          backgroundColor: 'rgba(58, 54, 50, 0.88)',
+          backdropFilter: 'blur(24px) saturate(1.4)',
+          WebkitBackdropFilter: 'blur(24px) saturate(1.4)',
+          border: '1px solid rgba(255, 255, 255, 0.10)',
           boxShadow: [
-            '0 8px 32px rgba(74,120,120,0.22)',
-            '0 2px 8px rgba(74,120,120,0.14)',
-            'inset 0 1px 0 rgba(255,255,255,0.35)',
-            'inset 0 -1px 0 rgba(60,110,110,0.12)',
+            '0 8px 32px rgba(30,27,24,0.28)',
+            '0 2px 8px rgba(30,27,24,0.16)',
+            'inset 0 1px 0 rgba(255,255,255,0.10)',
           ].join(', '),
           display: 'flex',
           alignItems: 'stretch',
