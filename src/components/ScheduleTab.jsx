@@ -268,9 +268,23 @@ function getCurrentHour() {
 
 function getCurrentEventId(events) {
   const h = getCurrentHour()
-  const active = events.filter(e => h >= e.startHour && h < e.endHour)
+  const active = events.filter(e => {
+    if (e.endHour > 24) {
+      // spans midnight: active in the evening (h >= start) OR in the morning (h < end - 24)
+      return h >= e.startHour || h < e.endHour - 24
+    }
+    return h >= e.startHour && h < e.endHour
+  })
   if (!active.length) return null
   return (active.find(e => e.character === 'lincoln') ?? active[0]).id
+}
+
+function getNextEventId(events) {
+  const h = getCurrentHour()
+  const upcoming = events
+    .filter(e => e.startHour > h)
+    .sort((a, b) => a.startHour - b.startHour)
+  return upcoming[0]?.id ?? null
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -523,13 +537,14 @@ export default function ScheduleTab() {
   }, [filteredEvents])
 
   function jumpToNow() {
-    const id = getCurrentEventId(filteredEvents)
-    if (!id) return
+    const nowId = getCurrentEventId(filteredEvents)
+    const scrollId = nowId ?? getNextEventId(filteredEvents)
+    if (!scrollId) return
     haptic(50)
-    setExpandedId(id)
-    setCurrentId(id)
+    setExpandedId(scrollId)
+    setCurrentId(nowId) // active treatment only for truly current events
     setTimeout(() => {
-      const el = document.getElementById(`event-${id}`)
+      const el = document.getElementById(`event-${scrollId}`)
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }, 50)
   }
