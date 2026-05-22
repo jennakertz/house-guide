@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { haptic } from '../haptic'
 import {
   Leaf, Palette, Footprints, Baby, MapPin,
-  Flame, UtensilsCrossed, Coffee,
+  Flame, UtensilsCrossed, Coffee, Sun,
 } from 'lucide-react'
 
 const CARD_SHADOW = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.06)'
@@ -136,6 +136,24 @@ export default function ActivitiesTab() {
       {/* Activities */}
       {segment === 'activities' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+
+          <ActivityCard Icon={Sun} title="The backyard">
+            Lincoln loves going out back and sitting on a blanket with some toys. There's also a bubble machine and bubbles you can bring out — he's a big fan.
+            <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: C.blue, flexShrink: 0, marginTop: '8px' }} />
+                <span>If you bring Spritz out, always stay with him.</span>
+              </div>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: C.blue, flexShrink: 0, marginTop: '8px' }} />
+                <span>There's a baby gate to block off the stairs so he can't escape — use it.</span>
+              </div>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: C.blue, flexShrink: 0, marginTop: '8px' }} />
+                <span>Keep an eye on him — he will absolutely eat something weird if left to his own devices.</span>
+              </div>
+            </div>
+          </ActivityCard>
 
           <ActivityCard Icon={Leaf} title="Atlanta Botanical Garden">
             A 10-minute walk through Piedmont Park — and we have a family pass, so it's free. Worth it for the seasonal gardens, the conservatory, and the canopy walk.
