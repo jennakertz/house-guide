@@ -17,9 +17,9 @@ const STEPS = [
     cta: 'Next',
   },
   {
-    id: 'subnav', tab: 'house', target: 'tour-segment', position: 'below', borderRadius: 12,
-    title: 'Each section has sub-tabs.',
-    body: 'Tap to switch between them — most pages organize their info this way.',
+    id: 'subnav', tab: 'schedule', target: 'tour-schedule-filter', position: 'below', borderRadius: 10,
+    title: 'Sub-tabs organize each section.',
+    body: 'Filter the schedule here, or find similar tabs in House and Explore to switch between views.',
     cta: 'Got it',
   },
 ]
@@ -63,15 +63,15 @@ export default function TourOverlay({ onDismiss, onTabChange }) {
   const vh = window.innerHeight
   const isAbove = step.position === 'above'
 
-  // Spotlight hole: opens when ready, collapses off-screen when not
-  const hx = ready && rect ? rect.left - PAD : -50
-  const hy = ready && rect ? rect.top  - PAD : -50
-  const hw = ready && rect ? rect.width  + PAD * 2 : 0
-  const hh = ready && rect ? rect.height + PAD * 2 : 0
-  const hr = ready ? step.borderRadius + PAD : 0
+  // Keep rect dimensions stable — only toggle scale so the hole
+  // always collapses/expands from its own center, never from a corner
+  const hx = rect ? rect.left - PAD : 0
+  const hy = rect ? rect.top  - PAD : 0
+  const hw = rect ? rect.width  + PAD * 2 : 0
+  const hh = rect ? rect.height + PAD * 2 : 0
+  const hr = rect ? step.borderRadius + PAD : 0
 
-  // Tooltip anchor (based on current rect, stays stable while opacity=0)
-  const tipBottom = rect ? vh - (rect.top  - PAD) + GAP : 0
+  const tipBottom = rect ? vh - (rect.top - PAD) + GAP : 0
   const tipTop    = rect ? rect.bottom + PAD + GAP      : 0
 
   return (
@@ -84,7 +84,7 @@ export default function TourOverlay({ onDismiss, onTabChange }) {
         pointerEvents: fading ? 'none' : 'all',
       }}
     >
-      {/* SVG dim — always present, spotlight hole animates open/closed */}
+      {/* Always-present SVG dim; hole scales in/out from its own center */}
       <svg
         style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 151, pointerEvents: 'none' }}
         viewBox={`0 0 ${vw} ${vh}`}
@@ -96,14 +96,18 @@ export default function TourOverlay({ onDismiss, onTabChange }) {
             <rect
               x={hx} y={hy} width={hw} height={hh} rx={hr}
               fill="black"
-              style={{ transition: 'x 0.22s ease, y 0.22s ease, width 0.22s ease, height 0.22s ease' }}
+              style={{
+                transformOrigin: 'center',
+                transform: ready ? 'scale(1)' : 'scale(0)',
+                transition: 'transform 0.22s ease',
+              }}
             />
           </mask>
         </defs>
         <rect width={vw} height={vh} fill="rgba(28,25,22,0.68)" mask="url(#tour-mask)" />
       </svg>
 
-      {/* Tooltip — always mounted once rect exists, fades in/out via ready */}
+      {/* Tooltip */}
       {rect && (
         <div
           onClick={e => e.stopPropagation()}

@@ -629,15 +629,17 @@ export default function ScheduleTab() {
       </div>
 
       {/* Segmented filter */}
-      <SegmentedControl
-        options={[
-          { id: 'all',     label: 'Everyone' },
-          { id: 'lincoln', label: 'Lincoln'  },
-          { id: 'spritz',  label: 'Spritz'   },
-        ]}
-        value={filter}
-        onChange={setFilter}
-      />
+      <div data-tour="tour-schedule-filter">
+        <SegmentedControl
+          options={[
+            { id: 'all',     label: 'Everyone' },
+            { id: 'lincoln', label: 'Lincoln'  },
+            { id: 'spritz',  label: 'Spritz'   },
+          ]}
+          value={filter}
+          onChange={setFilter}
+        />
+      </div>
 
       {/* One-nap banner */}
       {oneNap && filter !== 'spritz' && (
