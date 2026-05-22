@@ -23,7 +23,7 @@ export default function App() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          paddingBottom: 'calc(72px + env(safe-area-inset-bottom))',
+          paddingBottom: 'calc(96px + env(safe-area-inset-bottom))',
         }}
       >
         {activeTab === 'schedule'  && <ScheduleTab />}
@@ -31,22 +31,27 @@ export default function App() {
         {activeTab === 'emergency' && <EmergencyTab />}
       </div>
 
-      {/* Bottom nav */}
+      {/* Floating pill nav */}
       <nav
         style={{
           position: 'fixed',
-          bottom: 0,
+          bottom: 'calc(20px + env(safe-area-inset-bottom))',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: '100%',
-          maxWidth: '430px',
-          height: 'calc(56px + env(safe-area-inset-bottom))',
-          paddingBottom: 'env(safe-area-inset-bottom)',
+          width: 'calc(100% - 32px)',
+          maxWidth: '400px',
+          height: '62px',
+          borderRadius: '22px',
           backgroundColor: 'rgba(255, 253, 251, 0.45)',
-          backdropFilter: 'blur(24px) saturate(1.8)',
-          WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.75)',
-          boxShadow: '0 -1px 0 rgba(232,228,222,0.6), 0 -4px 20px rgba(26,22,18,0.06)',
+          backdropFilter: 'blur(28px) saturate(1.9)',
+          WebkitBackdropFilter: 'blur(28px) saturate(1.9)',
+          border: '1px solid rgba(255, 255, 255, 0.6)',
+          boxShadow: [
+            '0 8px 32px rgba(74,69,64,0.13)',
+            '0 2px 8px rgba(74,69,64,0.08)',
+            'inset 0 1px 0 rgba(255,255,255,0.85)',
+            'inset 0 -1px 0 rgba(74,69,64,0.04)',
+          ].join(', '),
           display: 'flex',
           alignItems: 'stretch',
           zIndex: 40,
@@ -63,20 +68,11 @@ export default function App() {
               style={{
                 flex: 1, display: 'flex', flexDirection: 'column',
                 alignItems: 'center', justifyContent: 'center',
-                gap: '3px', border: 'none', background: 'none',
-                cursor: 'pointer', padding: '8px 4px 0',
-                position: 'relative',
+                gap: '4px', border: 'none', background: 'none',
+                cursor: 'pointer', padding: '0 4px',
+                borderRadius: '22px',
               }}
             >
-              {isActive && (
-                <div style={{
-                  position: 'absolute', top: 0, left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '20px', height: '2px',
-                  backgroundColor: ACCENT,
-                  borderRadius: '0 0 2px 2px',
-                }} />
-              )}
               <Icon size={20} strokeWidth={isActive ? 2 : 1.5} color={color} />
               <span style={{
                 fontSize: '11px', fontFamily: 'DM Sans, sans-serif',

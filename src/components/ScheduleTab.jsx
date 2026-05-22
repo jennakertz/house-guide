@@ -248,9 +248,9 @@ const ONE_NAP_EVENTS = TWO_NAP_EVENTS
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function getGreeting() {
   const h = new Date().getHours()
-  if (h < 12) return 'Good morning!'
-  if (h < 17) return 'Good afternoon!'
-  return 'Good evening!'
+  if (h < 12) return 'Good morning'
+  if (h < 17) return 'Good afternoon'
+  return 'Good evening'
 }
 
 function getTimeStr() {
@@ -532,13 +532,15 @@ export default function ScheduleTab() {
             className="serif"
             style={{ fontSize: '26px', fontWeight: 400, color: C.text, lineHeight: 1.2 }}
           >
-            {getGreeting()}
+            Schedule.
           </h1>
           <span style={{ fontSize: '13px', color: C.muted, flexShrink: 0, marginLeft: '12px' }}>
             {timeStr}
           </span>
         </div>
-        <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>Here's the day.</p>
+        <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>
+          {getGreeting()} — here's the day.
+        </p>
       </div>
 
       {/* Controls row */}
