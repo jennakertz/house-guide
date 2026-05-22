@@ -6,7 +6,8 @@ import {
   ShoppingBag, Star, Footprints, Package, Baby, ChevronDown,
 } from 'lucide-react'
 
-const CARD_SHADOW = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.06)'
+const CARD_SHADOW   = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.06)'
+const ACTIVE_SHADOW = '0 2px 14px rgba(126,200,200,0.22), 0 1px 3px rgba(74,69,64,0.07)'
 
 const C = {
   text:    '#4A4540',
@@ -19,6 +20,30 @@ const C = {
   amber:   '#C9A84C',
   amberBg: '#FFFDF5',
 }
+
+const WEEK = [
+  {
+    id: 'mon', label: 'Monday', jsDay: 1,
+    items: [
+      'Yard crew arrives — no set time.',
+      'Put trash bins out to the street tonight.',
+      'Elizabeth is here.',
+    ],
+  },
+  {
+    id: 'tue', label: 'Tuesday', jsDay: 2,
+    items: [
+      'Trash pickup in the morning — bring bins in after the truck comes.',
+      'Cleaners every other week.',
+      'Elizabeth is here.',
+    ],
+  },
+  { id: 'wed', label: 'Wednesday', jsDay: 3, items: ['Elizabeth is here.'] },
+  { id: 'thu', label: 'Thursday',  jsDay: 4, items: ['Elizabeth is here.'] },
+  { id: 'fri', label: 'Friday',    jsDay: 5, items: ["Elizabeth's day off."] },
+  { id: 'sat', label: 'Saturday',  jsDay: 6, items: [] },
+  { id: 'sun', label: 'Sunday',    jsDay: 0, items: [] },
+]
 
 function SectionLabel({ children }) {
   return (
@@ -116,35 +141,6 @@ function FindItem({ Icon, label, location, steps }) {
   )
 }
 
-function DayCard({ day, items }) {
-  return (
-    <div style={{
-      backgroundColor: C.card, borderRadius: '10px',
-      border: `1px solid ${C.border}`, padding: '14px 16px',
-      boxShadow: CARD_SHADOW,
-    }}>
-      <div style={{
-        fontSize: '11px', fontWeight: 600, color: C.muted,
-        letterSpacing: '0.1em', textTransform: 'uppercase',
-        marginBottom: '10px',
-      }}>
-        {day}
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {items.map((item, i) => (
-          <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-            <div style={{
-              width: '4px', height: '4px', borderRadius: '50%',
-              backgroundColor: C.blue, flexShrink: 0, marginTop: '8px',
-            }} />
-            <span style={{ fontSize: '14px', color: C.text, lineHeight: '1.5' }}>{item}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function SegmentedControl({ options, value, onChange }) {
   return (
     <div style={{
@@ -179,6 +175,7 @@ function SegmentedControl({ options, value, onChange }) {
 
 export default function HouseTab() {
   const [segment, setSegment] = useState('for-you')
+  const today = new Date().getDay()
 
   return (
     <div style={{ padding: '24px 16px 8px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -242,24 +239,140 @@ export default function HouseTab() {
 
       {/* Schedule */}
       {segment === 'schedule' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <InfoCard Icon={User} title="Elizabeth (Nanny)">
-            Here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry, restock the diaper changing stations, and take out the diaper trash. You can decide how much additional childcare help you'd like from her.
-          </InfoCard>
+        <div style={{ position: 'relative', marginTop: '-8px' }}>
+          {/* Spine */}
+          <div style={{
+            position: 'absolute',
+            left: '15px', top: '14px', bottom: '14px',
+            width: '1px', backgroundColor: C.border, zIndex: 0,
+          }} />
 
-          <DayCard day="Monday" items={[
-            'Yard crew arrives — no set time.',
-            'Put trash bins out to the street tonight.',
-          ]} />
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {WEEK.map(day => {
+              const isToday = today === day.jsDay
+              const hasItems = day.items.length > 0
+              return (
+                <div key={day.id} style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  {/* Dot */}
+                  <div style={{
+                    width: '32px', flexShrink: 0,
+                    display: 'flex', justifyContent: 'center',
+                    paddingTop: '17px', position: 'relative', zIndex: 1,
+                  }}>
+                    <div style={{ position: 'relative', width: '8px', height: '8px', flexShrink: 0 }}>
+                      {isToday && (
+                        <div className="dot-ping" style={{
+                          position: 'absolute', inset: 0, borderRadius: '50%',
+                          backgroundColor: C.blue,
+                        }} />
+                      )}
+                      <div style={{
+                        width: '8px', height: '8px', borderRadius: '50%',
+                        backgroundColor: hasItems ? C.blue : C.border,
+                        boxShadow: isToday
+                          ? `0 0 0 3px ${C.blue}33, 0 0 0 2.5px #F5F3EF`
+                          : '0 0 0 2.5px #F5F3EF',
+                        position: 'relative', zIndex: 1,
+                      }} />
+                    </div>
+                  </div>
 
-          <DayCard day="Tuesday" items={[
-            'Trash pickup in the morning — bring the bins back in after the truck comes.',
-            'Cleaners arrive every other week.',
-          ]} />
+                  {/* Card */}
+                  <div style={{ flex: 1, paddingBottom: '10px' }}>
+                    <div style={{
+                      backgroundColor: isToday ? '#F5FBFB' : C.card,
+                      borderRadius: '10px',
+                      border: `1px solid ${C.border}`,
+                      borderLeft: isToday ? `2px solid ${C.blue}` : `1px solid ${C.border}`,
+                      padding: isToday ? '13px 14px 13px 13px' : '13px 14px',
+                      boxShadow: isToday ? ACTIVE_SHADOW : CARD_SHADOW,
+                      transition: 'background-color 0.2s, box-shadow 0.2s',
+                    }}>
+                      <div style={{
+                        display: 'flex', alignItems: 'center', gap: '8px',
+                        marginBottom: hasItems ? '10px' : 0,
+                      }}>
+                        <span style={{
+                          fontSize: '14px', fontWeight: 500,
+                          color: isToday ? C.blue : C.text,
+                        }}>
+                          {day.label}
+                        </span>
+                        {isToday && (
+                          <span style={{
+                            fontSize: '11px', fontWeight: 500, color: C.blue,
+                            backgroundColor: `${C.blue}18`,
+                            padding: '2px 7px', borderRadius: '20px',
+                            letterSpacing: '0.04em',
+                          }}>
+                            Today
+                          </span>
+                        )}
+                      </div>
 
-          <InfoCard Icon={Leaf} title="Herb garden">
-            Water as needed — they're thirsty little guys.
-          </InfoCard>
+                      {hasItems ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          {day.items.map((item, i) => (
+                            <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                              <div style={{
+                                width: '4px', height: '4px', borderRadius: '50%',
+                                backgroundColor: C.muted, flexShrink: 0, marginTop: '8px',
+                              }} />
+                              <span style={{ fontSize: '14px', color: C.text, lineHeight: '1.5' }}>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: '13px', color: C.muted, fontStyle: 'italic' }}>
+                          Nothing scheduled.
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+
+            {/* As needed node */}
+            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+              <div style={{
+                width: '32px', flexShrink: 0,
+                display: 'flex', justifyContent: 'center',
+                paddingTop: '17px', position: 'relative', zIndex: 1,
+              }}>
+                <div style={{
+                  width: '8px', height: '8px', borderRadius: '50%',
+                  border: `1.5px dashed ${C.muted}`,
+                  backgroundColor: 'transparent',
+                  boxShadow: '0 0 0 2.5px #F5F3EF',
+                }} />
+              </div>
+              <div style={{ flex: 1, paddingBottom: '10px' }}>
+                <div style={{
+                  backgroundColor: C.card, borderRadius: '10px',
+                  border: `1px solid ${C.border}`, padding: '13px 14px',
+                  boxShadow: CARD_SHADOW,
+                }}>
+                  <div style={{
+                    fontSize: '11px', fontWeight: 500, color: C.muted,
+                    textTransform: 'uppercase', letterSpacing: '0.1em',
+                    marginBottom: '8px',
+                  }}>
+                    As needed
+                  </div>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <div style={{
+                      width: '4px', height: '4px', borderRadius: '50%',
+                      backgroundColor: C.muted, flexShrink: 0, marginTop: '8px',
+                    }} />
+                    <span style={{ fontSize: '14px', color: C.text, lineHeight: '1.5' }}>
+                      Water the herb garden outside — they're thirsty little guys.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
