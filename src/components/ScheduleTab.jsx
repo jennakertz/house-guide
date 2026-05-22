@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import {
   Sunrise, Moon, BedDouble, Utensils, Footprints,
-  ShoppingBag, Clock, ChevronDown,
+  ShoppingBag, Clock, ChevronDown, X,
 } from 'lucide-react'
 
 // ─── Colors ──────────────────────────────────────────────────────────────────
@@ -18,6 +18,15 @@ const C = {
   dark:    '#1A1612',
   divider: '#EDE9E3',
 }
+
+const MEALTIME_RULES = [
+  'Lincoln must always be seated in his high chair to eat — at the counter or the table. No walking around with food.',
+  'Food comes from his shelf (middle shelf, fridge) or what Elizabeth prepared.',
+  'Utensils and bowls: far right cabinet in the pantry.',
+  'He drinks water from his straw cup throughout the day.',
+  'If he throws food on the floor: calmly say "looks like you\'re all done." If he does it again, end the meal and try again in 20 minutes.',
+  'He likes to feed Spritz — it\'s a habit we\'re working on.',
+]
 
 // ─── Timeline events ─────────────────────────────────────────────────────────
 const TWO_NAP_EVENTS = [
@@ -60,13 +69,11 @@ const TWO_NAP_EVENTS = [
     details: [
       "Food is on the middle shelf of the fridge — that's Lincoln's shelf. Only feed him food from there, or food Elizabeth has prepared.",
       "His bowls, plates, and utensils are in the far right cabinet of the pantry.",
-      "He must be seated in his high chair to eat — either at the counter or at the table. No walking around with food (choking hazard).",
       "He drinks water from a straw cup throughout the day.",
-      'Mealtime rule: if he throws food on the floor, calmly say "looks like you\'re all done." If he does it again, end the meal and try again in 20 minutes.',
-      "He likes to feed Spritz — it's a habit we're working on.",
     ],
     character: 'lincoln',
     dotColor: C.sage,
+    hasMealtimeRules: true,
   },
   {
     id: 'spritz-breakfast',
@@ -93,7 +100,7 @@ const TWO_NAP_EVENTS = [
     details: [
       "Nap starts about 3.5 hours after he woke up.",
       "Nap routine: (1) Change diaper, (2) Put on sleep sack, (3) Read 1–2 books, (4) Place in crib with his stuffed animals and at least 3 pacifiers.",
-      "Monitor him on the Nana app — the old iPhone is kept downstairs. Passcode: 111111.",
+      "Monitor him on the Nanit — the old iPhone is kept downstairs. Passcode: 111111.",
     ],
     character: 'lincoln',
     dotColor: C.lav,
@@ -108,10 +115,10 @@ const TWO_NAP_EVENTS = [
     details: [
       "He'll usually sleep about 1.5 hours. After he wakes, give him lunch from his fridge shelf.",
       "Snack too if he seems hungry.",
-      "Same mealtime rules apply.",
     ],
     character: 'lincoln',
     dotColor: C.sage,
+    hasMealtimeRules: true,
   },
   {
     id: 'nap2',
@@ -165,11 +172,12 @@ const TWO_NAP_EVENTS = [
     Icon: Utensils,
     preview: 'Dinner from his fridge shelf.',
     details: [
-      "Dinner from his fridge shelf. Same mealtime rules.",
+      "Dinner from his fridge shelf.",
       "Snack if he asks.",
     ],
     character: 'lincoln',
     dotColor: C.sage,
+    hasMealtimeRules: true,
   },
   {
     id: 'bedtime',
@@ -184,7 +192,7 @@ const TWO_NAP_EVENTS = [
       "If he woke around 5:00 PM → start bedtime around 6:45 PM.",
       "Aim for him to be in the crib by 7:00 PM.",
       "Bedtime routine: (1) Warm bottle or sippy cup, (2) Change diaper, (3) Sleep sack, (4) Read 1–2 books, (5) Crib with stuffed animals and at least 3 pacifiers.",
-      "Keep the Nana app on overnight.",
+      "Keep the Nanit on overnight.",
     ],
     character: 'lincoln',
     dotColor: C.dark,
@@ -231,7 +239,7 @@ const ONE_NAP_EVENTS = TWO_NAP_EVENTS
       details: [
         "Nap starts about 3.5 hours after he woke up. On a one-nap day, he may sleep up to 3 hours — that's okay.",
         "Nap routine: (1) Change diaper, (2) Put on sleep sack, (3) Read 1–2 books, (4) Place in crib with his stuffed animals and at least 3 pacifiers.",
-        "Monitor him on the Nana app — the old iPhone is kept downstairs. Passcode: 111111.",
+        "Monitor him on the Nanit — the old iPhone is kept downstairs. Passcode: 111111.",
         "If he sleeps under 2 hrs 45 min, he may still need a second nap later.",
       ],
     }
@@ -274,56 +282,100 @@ function SectionLabel({ children, style = {} }) {
   )
 }
 
-function MealtimeRules({ expanded, onToggle }) {
+function SegmentedControl({ options, value, onChange }) {
   return (
     <div style={{
-      backgroundColor: C.card, borderRadius: '10px',
-      border: `1px solid ${C.border}`, overflow: 'hidden',
+      display: 'flex', backgroundColor: C.bg,
+      borderRadius: '8px', padding: '3px',
+      border: `1px solid ${C.border}`,
     }}>
-      <button
-        onClick={onToggle}
-        style={{
-          width: '100%', display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', padding: '14px 16px',
-          background: 'none', border: 'none', cursor: 'pointer',
-          fontFamily: 'DM Sans, sans-serif',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Utensils size={18} strokeWidth={1.5} color={C.muted} />
-          <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>Mealtime rules</span>
-        </div>
-        <ChevronDown
-          size={16} strokeWidth={1.5} color={C.muted}
-          style={{ transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }}
-        />
-      </button>
-      {expanded && (
-        <div style={{ padding: '0 16px 14px', borderTop: `1px solid ${C.border}` }}>
-          <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {[
-              'Lincoln must always be seated in his high chair to eat.',
-              "Food comes from his shelf (middle shelf, fridge) or what Elizabeth prepared.",
-              'Utensils and bowls: far right cabinet in the pantry.',
-              'If he throws food: say "looks like you\'re all done," end the meal, retry in 20 min.',
-              'Water from his straw cup throughout the day.',
-            ].map((rule, i) => (
-              <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                <div style={{
-                  width: '4px', height: '4px', borderRadius: '50%',
-                  backgroundColor: C.sage, flexShrink: 0, marginTop: '9px',
-                }} />
-                <span style={{ fontSize: '14px', color: C.text, lineHeight: '1.5' }}>{rule}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {options.map(opt => {
+        const active = value === opt.id
+        return (
+          <button
+            key={opt.id}
+            onClick={() => onChange(opt.id)}
+            style={{
+              flex: 1, padding: '8px 12px', borderRadius: '6px',
+              border: 'none', cursor: 'pointer',
+              backgroundColor: active ? C.card : 'transparent',
+              color: active ? C.text : C.muted,
+              fontSize: '14px', fontWeight: active ? 500 : 400,
+              fontFamily: 'DM Sans, sans-serif',
+              boxShadow: active ? '0 1px 4px rgba(0,0,0,0.07)' : 'none',
+              transition: 'all 0.15s',
+            }}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
     </div>
   )
 }
 
-function TimelineEvent({ event, isActive, isCurrent, onToggle }) {
+function MealtimeRulesModal({ onClose }) {
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0,
+        backgroundColor: 'rgba(26,22,18,0.45)',
+        backdropFilter: 'blur(2px)',
+        WebkitBackdropFilter: 'blur(2px)',
+        zIndex: 100,
+        display: 'flex', alignItems: 'flex-end',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          width: '100%', maxWidth: '430px',
+          backgroundColor: C.card,
+          borderRadius: '16px 16px 0 0',
+          padding: '0 20px calc(32px + env(safe-area-inset-bottom))',
+        }}
+      >
+        {/* drag handle */}
+        <div style={{
+          width: '36px', height: '4px', borderRadius: '2px',
+          backgroundColor: C.border, margin: '12px auto 20px',
+        }} />
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Utensils size={18} strokeWidth={1.5} color={C.muted} />
+            <span style={{ fontSize: '16px', fontWeight: 500, color: C.text }}>Mealtime rules</span>
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              padding: '4px', color: C.muted,
+            }}
+          >
+            <X size={18} strokeWidth={1.5} color={C.muted} />
+          </button>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {MEALTIME_RULES.map((rule, i) => (
+            <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+              <div style={{
+                width: '4px', height: '4px', borderRadius: '50%',
+                backgroundColor: C.sage, flexShrink: 0, marginTop: '9px',
+              }} />
+              <span style={{ fontSize: '14px', color: C.text, lineHeight: '1.55' }}>{rule}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function TimelineEvent({ event, isActive, isCurrent, onToggle, onMealtimeRules }) {
   const { Icon } = event
   return (
     <div id={`event-${event.id}`} style={{ display: 'flex', alignItems: 'flex-start' }}>
@@ -379,6 +431,26 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle }) {
             <div style={{ fontSize: '13px', color: C.muted, marginTop: '4px', lineHeight: '1.4' }}>
               {event.preview}
             </div>
+
+            {event.hasMealtimeRules && (
+              <button
+                onClick={e => { e.stopPropagation(); onMealtimeRules() }}
+                style={{
+                  marginTop: '10px',
+                  display: 'inline-flex', alignItems: 'center', gap: '5px',
+                  backgroundColor: C.bg,
+                  border: `1px solid ${C.border}`,
+                  borderRadius: '6px',
+                  padding: '5px 10px',
+                  fontSize: '12px', fontWeight: 500, color: C.muted,
+                  cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
+                }}
+              >
+                <Utensils size={12} strokeWidth={1.5} />
+                Mealtime rules
+              </button>
+            )}
+
             {isActive && (
               <div style={{ marginTop: '14px', borderTop: `1px solid ${C.border}`, paddingTop: '12px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -406,7 +478,7 @@ export default function ScheduleTab() {
   const [oneNap, setOneNap] = useState(false)
   const [filter, setFilter] = useState('all')
   const [expandedId, setExpandedId] = useState(null)
-  const [rulesExpanded, setRulesExpanded] = useState(false)
+  const [mealtimeOpen, setMealtimeOpen] = useState(false)
   const [currentId, setCurrentId] = useState(null)
   const [timeStr, setTimeStr] = useState(getTimeStr)
 
@@ -420,10 +492,8 @@ export default function ScheduleTab() {
     [baseEvents, filter]
   )
 
-  // Close expanded card when filter or nap mode changes
   useEffect(() => { setExpandedId(null) }, [filter, oneNap])
 
-  // Track current event & clock
   useEffect(() => {
     setCurrentId(getCurrentEventId(filteredEvents))
     setTimeStr(getTimeStr())
@@ -520,35 +590,16 @@ export default function ScheduleTab() {
         </div>
       </div>
 
-      {/* Filter pills */}
-      <div style={{ display: 'flex', gap: '8px' }}>
-        {['all', 'lincoln', 'spritz'].map(f => {
-          const active = filter === f
-          return (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              style={{
-                padding: '6px 16px', borderRadius: '100px',
-                border: active ? 'none' : `1px solid ${C.border}`,
-                backgroundColor: active ? C.text : C.bg,
-                color: active ? '#FFFFFF' : C.muted,
-                fontSize: '13px', fontWeight: active ? 500 : 400,
-                cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
-                textTransform: 'capitalize',
-                transition: 'all 0.15s',
-              }}
-            >
-              {f === 'all' ? 'All' : f.charAt(0).toUpperCase() + f.slice(1)}
-            </button>
-          )
-        })}
-      </div>
-
-      {/* Mealtime rules */}
-      {filter !== 'spritz' && (
-        <MealtimeRules expanded={rulesExpanded} onToggle={() => setRulesExpanded(v => !v)} />
-      )}
+      {/* Segmented filter */}
+      <SegmentedControl
+        options={[
+          { id: 'all',     label: 'Everyone' },
+          { id: 'lincoln', label: 'Lincoln'  },
+          { id: 'spritz',  label: 'Spritz'   },
+        ]}
+        value={filter}
+        onChange={setFilter}
+      />
 
       {/* One-nap banner */}
       {oneNap && filter !== 'spritz' && (
@@ -584,6 +635,7 @@ export default function ScheduleTab() {
               isActive={expandedId === event.id}
               isCurrent={currentId === event.id}
               onToggle={() => toggleEvent(event.id)}
+              onMealtimeRules={() => setMealtimeOpen(true)}
             />
           ))}
           {/* End marker */}
@@ -600,6 +652,9 @@ export default function ScheduleTab() {
           </div>
         </div>
       </div>
+
+      {/* Mealtime rules modal */}
+      {mealtimeOpen && <MealtimeRulesModal onClose={() => setMealtimeOpen(false)} />}
 
     </div>
   )

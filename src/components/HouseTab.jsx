@@ -176,9 +176,9 @@ export default function HouseTab() {
           </InfoCard>
 
           <InfoCard Icon={Wifi} title="Wifi">
-            <span style={{ color: C.muted }}>Network:</span> <strong>[to be filled in]</strong>
+            <span style={{ color: C.muted }}>Network:</span> <strong>window_corgi</strong>
             <br />
-            <span style={{ color: C.muted }}>Password:</span> <strong>[to be filled in]</strong>
+            <span style={{ color: C.muted }}>Password:</span> <strong>puppy123</strong>
           </InfoCard>
 
           <InfoCard Icon={Thermometer} title="Temperature">
@@ -213,6 +213,8 @@ export default function HouseTab() {
           />
           <FindItem Icon={Smartphone} label="Baby monitor (Nanit)"  location="Old iPhone downstairs · passcode 111111" />
           <FindItem Icon={Plus}       label="Baby medicine"         location="Under the sink, baby's room" />
+          <FindItem Icon={Package}    label="Diaper bag"            location="Right cabinet, mudroom" />
+          <FindItem Icon={Baby}       label="Stroller"              location="Hallway closet" />
 
           <div style={{ marginTop: '8px' }}>
             <SectionLabel>Spritz</SectionLabel>
@@ -220,12 +222,6 @@ export default function HouseTab() {
           <FindItem Icon={ShoppingBag} label="Dog food (kibble)"            location="Pantry" />
           <FindItem Icon={Star}        label="Dog treats & supplies"        location="Left cabinet, mudroom" />
           <FindItem Icon={Footprints}  label="Spritz's leash"              location="Hallway closet" />
-
-          <div style={{ marginTop: '8px' }}>
-            <SectionLabel>On the go</SectionLabel>
-          </div>
-          <FindItem Icon={Package} label="Diaper bag"  location="Right cabinet, mudroom" />
-          <FindItem Icon={Baby}    label="Stroller"    location="Hallway closet" />
         </div>
       )}
 
