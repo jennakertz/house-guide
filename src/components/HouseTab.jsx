@@ -12,6 +12,8 @@ const C = {
   card:    '#FFFFFF',
   bg:      '#F5F3EF',
   divider: '#EDE9E3',
+  amber:   '#C9A84C',
+  amberBg: '#FFFDF5',
 }
 
 function SectionLabel({ children }) {
@@ -193,9 +195,19 @@ export default function HouseTab() {
             Elizabeth is here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry. You can decide how much additional childcare help you'd like from her.
           </InfoCard>
 
-          <InfoCard Icon={PawPrint} title="Sarah's dogs">
-            Josh's sister Sarah is visiting with her husband and their two dogs — we're so glad everyone gets to be together! One thing to be aware of: one of her dogs can be unpredictable around small children, so we ask that her dogs and Lincoln stay in separate spaces throughout the visit. Please also make sure her dogs aren't left alone in the house. Sarah is fully aware of this and will be happy to help make it work.
-          </InfoCard>
+          <div style={{
+            backgroundColor: C.amberBg, borderRadius: '10px',
+            border: `1px solid ${C.border}`, borderLeft: `3px solid ${C.amber}`,
+            padding: '16px 16px 16px 14px',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+              <PawPrint size={16} strokeWidth={1.5} color={C.amber} />
+              <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>A note about the pups</span>
+            </div>
+            <p style={{ fontSize: '14px', color: C.text, lineHeight: '1.6' }}>
+              Just a reminder of what we flagged before we left — so glad Sarah didn't have to board them! We're at a stage where we're keeping Lincoln away from dogs (his movements are pretty unpredictable right now), so Sarah's dogs and Lincoln will need to stay separated the whole visit. And since Mylo tends to get anxious without Sarah around — which then gets Spritz going — the dogs really can't be left alone at the house. Sarah, just plan to have eyes on them the whole time. Thanks so much!
+            </p>
+          </div>
         </div>
       )}
 
