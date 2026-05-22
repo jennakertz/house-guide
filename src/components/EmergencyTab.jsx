@@ -156,7 +156,7 @@ export default function EmergencyTab() {
         Icon={Baby}
         role="Pediatrician"
         name="Dr. Brian Wynn — Peachtree Park Pediatrics"
-        number="(404) 237-0704"
+        number="(404) 351-1131"
       />
 
       {/* Spritz contacts */}
@@ -165,8 +165,8 @@ export default function EmergencyTab() {
       <ContactCard
         Icon={PawPrint}
         role="Regular Vet"
-        name="Good Vets"
-        number="(404) 555-0199"
+        name="GoodVets West Midtown"
+        number="(404) 779-6788"
         note="Reach out to us first and we'll help coordinate."
       />
 
