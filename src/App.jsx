@@ -5,6 +5,7 @@ import ScheduleTab from './components/ScheduleTab'
 import HouseTab from './components/HouseTab'
 import EmergencyTab from './components/EmergencyTab'
 import ActivitiesTab from './components/ActivitiesTab'
+import SplashScreen from './components/SplashScreen'
 
 const TABS = [
   { id: 'schedule',   label: 'Schedule', Icon: CalendarDays },
@@ -16,8 +17,14 @@ const TABS = [
 const ACCENT = '#7EC8C8'
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem('splashSeen'))
   const [activeTab, setActiveTab] = useState('schedule')
   const [navVisible, setNavVisible] = useState(true)
+
+  const handleDismiss = useCallback(() => {
+    sessionStorage.setItem('splashSeen', '1')
+    setShowSplash(false)
+  }, [])
   const lastScrollY = useRef(0)
   const scrollRef = useRef(null)
 
@@ -58,6 +65,7 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
+      {showSplash && <SplashScreen onDismiss={handleDismiss} />}
       {/* Scrollable content */}
       <div
         ref={scrollRef}
