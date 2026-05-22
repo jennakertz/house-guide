@@ -270,13 +270,15 @@ function getCurrentEventId(events) {
   const h = getCurrentHour()
   const active = events.filter(e => {
     if (e.endHour > 24) {
-      // spans midnight: active in the evening (h >= start) OR in the morning (h < end - 24)
       return h >= e.startHour || h < e.endHour - 24
     }
     return h >= e.startHour && h < e.endHour
   })
-  if (!active.length) return null
-  return (active.find(e => e.character === 'lincoln') ?? active[0]).id
+  if (active.length) {
+    return (active.find(e => e.character === 'lincoln') ?? active[0]).id
+  }
+  // During schedule gaps, fall back to the next upcoming event
+  return getNextEventId(events)
 }
 
 function getNextEventId(events) {
@@ -537,13 +539,12 @@ export default function ScheduleTab() {
   }, [filteredEvents])
 
   function jumpToNow() {
-    const nowId = getCurrentEventId(filteredEvents)
-    const scrollId = nowId ?? getNextEventId(filteredEvents)
-    if (!scrollId) return
+    const id = getCurrentEventId(filteredEvents)
+    if (!id) return
     haptic(50)
-    setExpandedId(scrollId)
+    setExpandedId(id)
     setTimeout(() => {
-      const el = document.getElementById(`event-${scrollId}`)
+      const el = document.getElementById(`event-${id}`)
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }, 50)
   }
