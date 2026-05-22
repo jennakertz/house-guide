@@ -277,10 +277,12 @@ function getCurrentEventId(events) {
 function SectionLabel({ children, style = {} }) {
   return (
     <div style={{
+      display: 'flex', alignItems: 'center', gap: '6px',
       fontSize: '10px', fontWeight: 500, color: C.muted,
       letterSpacing: '0.12em', textTransform: 'uppercase',
       ...style,
     }}>
+      <div style={{ width: '14px', height: '1.5px', backgroundColor: C.blue, flexShrink: 0 }} />
       {children}
     </div>
   )
@@ -389,14 +391,22 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle, onMealtimeRules }
         display: 'flex', justifyContent: 'center',
         paddingTop: '17px', position: 'relative', zIndex: 1,
       }}>
-        <div style={{
-          width: '8px', height: '8px', borderRadius: '50%',
-          backgroundColor: event.dotColor,
-          boxShadow: isCurrent
-            ? `0 0 0 3px ${event.dotColor}33, 0 0 0 2.5px #F5F3EF`
-            : '0 0 0 2.5px #F5F3EF',
-          flexShrink: 0,
-        }} />
+        <div style={{ position: 'relative', width: '8px', height: '8px', flexShrink: 0 }}>
+          {isCurrent && (
+            <div className="dot-ping" style={{
+              position: 'absolute', inset: 0, borderRadius: '50%',
+              backgroundColor: event.dotColor,
+            }} />
+          )}
+          <div style={{
+            width: '8px', height: '8px', borderRadius: '50%',
+            backgroundColor: event.dotColor,
+            boxShadow: isCurrent
+              ? `0 0 0 3px ${event.dotColor}33, 0 0 0 2.5px #F5F3EF`
+              : '0 0 0 2.5px #F5F3EF',
+            position: 'relative', zIndex: 1,
+          }} />
+        </div>
       </div>
       {/* Card */}
       <div style={{ flex: 1, paddingBottom: '10px' }}>
@@ -650,7 +660,8 @@ export default function ScheduleTab() {
             <div style={{ width: '32px', display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
               <div style={{
                 width: '6px', height: '6px', borderRadius: '50%',
-                backgroundColor: C.border, boxShadow: '0 0 0 2.5px #F5F3EF',
+                backgroundColor: C.blue, boxShadow: '0 0 0 2.5px #F5F3EF',
+                opacity: 0.45,
               }} />
             </div>
             <span style={{ fontSize: '13px', color: C.muted, fontStyle: 'italic' }}>

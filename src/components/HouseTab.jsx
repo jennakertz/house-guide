@@ -15,6 +15,7 @@ const C = {
   card:    '#FFFFFF',
   bg:      '#F5F3EF',
   divider: '#EDE9E3',
+  blue:    '#7EC8C8',
   amber:   '#C9A84C',
   amberBg: '#FFFDF5',
 }
@@ -22,9 +23,11 @@ const C = {
 function SectionLabel({ children }) {
   return (
     <div style={{
+      display: 'flex', alignItems: 'center', gap: '6px',
       fontSize: '10px', fontWeight: 500, color: C.muted,
       letterSpacing: '0.12em', textTransform: 'uppercase',
     }}>
+      <div style={{ width: '14px', height: '1.5px', backgroundColor: C.blue, flexShrink: 0 }} />
       {children}
     </div>
   )
@@ -38,7 +41,7 @@ function InfoCard({ Icon, title, children }) {
       boxShadow: CARD_SHADOW,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-        <Icon size={18} strokeWidth={1.5} color={C.muted} />
+        <Icon size={18} strokeWidth={1.5} color={C.blue} />
         <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>{title}</span>
       </div>
       <div style={{ fontSize: '14px', color: C.text, lineHeight: '1.6' }}>

@@ -6,6 +6,7 @@ const C = {
   border:  '#E8E4DE',
   card:    '#FFFFFF',
   bg:      '#F5F3EF',
+  blue:    '#7EC8C8',
   sos:     '#C0392B',
 }
 
@@ -14,9 +15,11 @@ const CARD_SHADOW = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.0
 function SectionLabel({ children }) {
   return (
     <div style={{
+      display: 'flex', alignItems: 'center', gap: '6px',
       fontSize: '10px', fontWeight: 500, color: C.muted,
       letterSpacing: '0.12em', textTransform: 'uppercase',
     }}>
+      <div style={{ width: '14px', height: '1.5px', backgroundColor: C.blue, flexShrink: 0 }} />
       {children}
     </div>
   )
