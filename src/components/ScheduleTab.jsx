@@ -6,7 +6,7 @@ import {
 
 // ─── Colors ──────────────────────────────────────────────────────────────────
 const C = {
-  text:    '#1A1612',
+  text:    '#4A4540',
   muted:   '#8A8078',
   border:  '#E8E4DE',
   card:    '#FFFFFF',
@@ -15,7 +15,7 @@ const C = {
   sage:    '#8DB898',
   lav:     '#B8A8CC',
   yellow:  '#E8CC88',
-  dark:    '#1A1612',
+  dark:    '#4A4540',
   divider: '#EDE9E3',
 }
 

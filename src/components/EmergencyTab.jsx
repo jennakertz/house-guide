@@ -1,7 +1,7 @@
 import { Phone, AlertTriangle, Heart, Baby, PawPrint, Stethoscope } from 'lucide-react'
 
 const C = {
-  text:    '#1A1612',
+  text:    '#4A4540',
   muted:   '#8A8078',
   border:  '#E8E4DE',
   card:    '#FFFFFF',
