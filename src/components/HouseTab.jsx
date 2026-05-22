@@ -56,7 +56,7 @@ function FindItem({ Icon, label, location, steps }) {
       border: `1px solid ${C.border}`, overflow: 'hidden',
     }}>
       <div
-        onClick={expandable ? () => { haptic(8); setOpen(v => !v) } : undefined}
+        onClick={expandable ? () => { haptic(40); setOpen(v => !v) } : undefined}
         style={{
           display: 'flex', alignItems: 'center', gap: '12px',
           padding: '13px 16px',
@@ -121,7 +121,7 @@ function SegmentedControl({ options, value, onChange }) {
         return (
           <button
             key={opt.id}
-            onClick={() => { haptic(6); onChange(opt.id) }}
+            onClick={() => { haptic(40); onChange(opt.id) }}
             style={{
               flex: 1, padding: '8px 12px', borderRadius: '6px',
               border: 'none', cursor: 'pointer',

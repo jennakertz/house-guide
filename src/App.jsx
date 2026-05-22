@@ -29,7 +29,7 @@ export default function App() {
   }, [])
 
   const handleTabChange = useCallback((tabId) => {
-    haptic(6)
+    haptic(40)
     setActiveTab(tabId)
     setNavVisible(true)
     lastScrollY.current = 0
