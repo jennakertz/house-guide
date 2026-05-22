@@ -36,7 +36,7 @@ export default function App() {
   }, [])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', backgroundColor: '#F5F3EF' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
       {/* Scrollable content */}
       <div
         className="no-scrollbar"

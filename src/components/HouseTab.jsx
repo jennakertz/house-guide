@@ -6,6 +6,8 @@ import {
   ShoppingBag, Star, Footprints, Package, Baby, ChevronDown,
 } from 'lucide-react'
 
+const CARD_SHADOW = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.06)'
+
 const C = {
   text:    '#4A4540',
   muted:   '#8A8078',
@@ -33,6 +35,7 @@ function InfoCard({ Icon, title, children }) {
     <div style={{
       backgroundColor: C.card, borderRadius: '10px',
       border: `1px solid ${C.border}`, padding: '16px',
+      boxShadow: CARD_SHADOW,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
         <Icon size={18} strokeWidth={1.5} color={C.muted} />
@@ -54,6 +57,7 @@ function FindItem({ Icon, label, location, steps }) {
     <div style={{
       backgroundColor: C.card, borderRadius: '10px',
       border: `1px solid ${C.border}`, overflow: 'hidden',
+      boxShadow: CARD_SHADOW,
     }}>
       <div
         onClick={expandable ? () => { haptic(40); setOpen(v => !v) } : undefined}
@@ -199,7 +203,7 @@ export default function HouseTab() {
           <div style={{
             backgroundColor: C.amberBg, borderRadius: '10px',
             border: `1px solid ${C.border}`, borderLeft: `3px solid ${C.amber}`,
-            padding: '16px 16px 16px 14px',
+            padding: '16px 16px 16px 14px', boxShadow: CARD_SHADOW,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
               <PawPrint size={16} strokeWidth={1.5} color={C.amber} />

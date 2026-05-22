@@ -29,6 +29,9 @@ const MEALTIME_RULES = [
   'He likes to feed Spritz — it\'s a habit we\'re working on.',
 ]
 
+const CARD_SHADOW = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.06)'
+const ACTIVE_SHADOW = '0 2px 14px rgba(126,200,200,0.22), 0 1px 3px rgba(74,69,64,0.07)'
+
 // ─── Timeline events ─────────────────────────────────────────────────────────
 const TWO_NAP_EVENTS = [
   {
@@ -411,7 +414,8 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle, onMealtimeRules }
             border: `1px solid ${C.border}`,
             borderLeft: isCurrent ? `2px solid ${C.blue}` : `1px solid ${C.border}`,
             padding: isCurrent ? '14px 14px 14px 13px' : '14px',
-            transition: 'background-color 0.2s',
+            boxShadow: isCurrent ? ACTIVE_SHADOW : CARD_SHADOW,
+            transition: 'background-color 0.2s, box-shadow 0.2s',
           }}>
             <div style={{ fontSize: '12px', color: C.muted, marginBottom: '5px', letterSpacing: '0.01em' }}>
               {event.time}

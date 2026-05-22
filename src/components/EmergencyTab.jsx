@@ -9,6 +9,8 @@ const C = {
   sos:     '#C0392B',
 }
 
+const CARD_SHADOW = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.06)'
+
 function SectionLabel({ children }) {
   return (
     <div style={{
@@ -48,6 +50,7 @@ function ContactCard({ Icon, role, name, number, note }) {
     <div style={{
       backgroundColor: C.card, borderRadius: '10px',
       border: `1px solid ${C.border}`, padding: '16px',
+      boxShadow: CARD_SHADOW,
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -97,6 +100,7 @@ export default function EmergencyTab() {
       <div style={{
         backgroundColor: C.text, borderRadius: '10px', padding: '20px',
         color: '#FFFFFF',
+        boxShadow: '0 4px 20px rgba(74,69,64,0.18), 0 1px 4px rgba(74,69,64,0.1)',
       }}>
         <div style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>
           We're in Mexico · June 14–19
@@ -116,6 +120,7 @@ export default function EmergencyTab() {
         border: `1px solid ${C.border}`,
         borderLeft: `4px solid ${C.sos}`,
         padding: '16px 16px 16px 14px',
+        boxShadow: CARD_SHADOW,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
           <AlertTriangle size={18} strokeWidth={1.5} color={C.sos} />
@@ -137,6 +142,7 @@ export default function EmergencyTab() {
         borderLeft: `3px solid #B8A8CC`,
         padding: '14px 14px 14px 13px',
         fontSize: '13px', color: C.text, lineHeight: '1.5',
+        boxShadow: CARD_SHADOW,
       }}>
         <div style={{ fontWeight: 500, color: C.text, marginBottom: '4px' }}>Medical history</div>
         Lincoln was born with Tetralogy of Fallot and had open heart surgery at one week old. He is healthy and thriving — this is just important context in any medical situation.
@@ -173,6 +179,7 @@ export default function EmergencyTab() {
         border: `1px solid ${C.border}`,
         borderLeft: `3px solid ${C.sos}`,
         padding: '14px 14px 14px 13px',
+        boxShadow: CARD_SHADOW,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
           <AlertTriangle size={16} strokeWidth={1.5} color={C.sos} />
