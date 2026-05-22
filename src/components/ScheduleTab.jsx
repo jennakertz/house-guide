@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+import { haptic } from '../haptic'
 import {
   Sunrise, Moon, BedDouble, Utensils, Footprints,
   ShoppingBag, Clock, ChevronDown, X,
@@ -294,7 +295,7 @@ function SegmentedControl({ options, value, onChange }) {
         return (
           <button
             key={opt.id}
-            onClick={() => onChange(opt.id)}
+            onClick={() => { haptic(6); onChange(opt.id) }}
             style={{
               flex: 1, padding: '8px 12px', borderRadius: '6px',
               border: 'none', cursor: 'pointer',
@@ -349,7 +350,7 @@ function MealtimeRulesModal({ onClose }) {
             <span style={{ fontSize: '16px', fontWeight: 500, color: C.text }}>Mealtime rules</span>
           </div>
           <button
-            onClick={onClose}
+            onClick={() => { haptic(6); onClose() }}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
               padding: '4px', color: C.muted,
@@ -434,7 +435,7 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle, onMealtimeRules }
 
             {event.hasMealtimeRules && (
               <button
-                onClick={e => { e.stopPropagation(); onMealtimeRules() }}
+                onClick={e => { e.stopPropagation(); haptic(8); onMealtimeRules() }}
                 style={{
                   marginTop: '10px',
                   display: 'inline-flex', alignItems: 'center', gap: '5px',
@@ -510,6 +511,7 @@ export default function ScheduleTab() {
   function jumpToNow() {
     const id = getCurrentEventId(filteredEvents)
     if (!id) return
+    haptic(10)
     setExpandedId(id)
     setCurrentId(id)
     setTimeout(() => {
@@ -519,6 +521,7 @@ export default function ScheduleTab() {
   }
 
   function toggleEvent(id) {
+    haptic(8)
     setExpandedId(prev => (prev === id ? null : id))
   }
 
@@ -557,7 +560,7 @@ export default function ScheduleTab() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: 'auto' }}>
           <span
-            onClick={() => setOneNap(v => !v)}
+            onClick={() => { haptic(12); setOneNap(v => !v) }}
             style={{
               fontSize: '13px', color: C.muted, cursor: 'pointer',
               userSelect: 'none', whiteSpace: 'nowrap',
@@ -566,7 +569,7 @@ export default function ScheduleTab() {
             One nap day
           </span>
           <button
-            onClick={() => setOneNap(v => !v)}
+            onClick={() => { haptic(12); setOneNap(v => !v) }}
             role="switch"
             aria-checked={oneNap}
             style={{

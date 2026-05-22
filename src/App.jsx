@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
 import { CalendarDays, Home, Phone } from 'lucide-react'
+import { haptic } from './haptic'
 import ScheduleTab from './components/ScheduleTab'
 import HouseTab from './components/HouseTab'
 import EmergencyTab from './components/EmergencyTab'
@@ -28,6 +29,7 @@ export default function App() {
   }, [])
 
   const handleTabChange = useCallback((tabId) => {
+    haptic(6)
     setActiveTab(tabId)
     setNavVisible(true)
     lastScrollY.current = 0
