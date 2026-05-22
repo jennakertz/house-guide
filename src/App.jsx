@@ -39,14 +39,15 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const el = scrollRef.current
-    if (!el) return
-    const t = setTimeout(() => { el.scrollTop = 0 }, 0)
+    const t = setTimeout(() => {
+      if (scrollRef.current) scrollRef.current.scrollTop = 0
+      window.scrollTo(0, 0)
+    }, 0)
     return () => clearTimeout(t)
   }, [activeTab])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', background: 'linear-gradient(160deg, #FAF8F4 0%, #EBE7DF 100%)' }}>
       {/* Scrollable content */}
       <div
         ref={scrollRef}
