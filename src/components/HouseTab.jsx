@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { haptic } from '../haptic'
 import {
-  Home, BedDouble, Wifi, Thermometer, Leaf, User, PawPrint, Trash2,
+  Home, BedDouble, Wifi, Thermometer, Leaf, User, PawPrint,
   UtensilsCrossed, Coffee, Smartphone, Plus,
   ShoppingBag, Star, Footprints, Package, Baby, ChevronDown,
 } from 'lucide-react'
@@ -116,6 +116,35 @@ function FindItem({ Icon, label, location, steps }) {
   )
 }
 
+function DayCard({ day, items }) {
+  return (
+    <div style={{
+      backgroundColor: C.card, borderRadius: '10px',
+      border: `1px solid ${C.border}`, padding: '14px 16px',
+      boxShadow: CARD_SHADOW,
+    }}>
+      <div style={{
+        fontSize: '11px', fontWeight: 600, color: C.muted,
+        letterSpacing: '0.1em', textTransform: 'uppercase',
+        marginBottom: '10px',
+      }}>
+        {day}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {items.map((item, i) => (
+          <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+            <div style={{
+              width: '4px', height: '4px', borderRadius: '50%',
+              backgroundColor: C.blue, flexShrink: 0, marginTop: '8px',
+            }} />
+            <span style={{ fontSize: '14px', color: C.text, lineHeight: '1.5' }}>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function SegmentedControl({ options, value, onChange }) {
   return (
     <div style={{
@@ -169,7 +198,7 @@ export default function HouseTab() {
 
       {/* Segmented control */}
       <SegmentedControl
-        options={[{ id: 'for-you', label: 'For You' }, { id: 'find-it', label: 'Find It' }]}
+        options={[{ id: 'for-you', label: 'For You' }, { id: 'find-it', label: 'Find It' }, { id: 'schedule', label: 'Schedule' }]}
         value={segment}
         onChange={setSegment}
       />
@@ -195,18 +224,6 @@ export default function HouseTab() {
             Adjust the thermostat to whatever is comfortable. Please keep it at or below 72°F — Lincoln sleeps best in a cooler room.
           </InfoCard>
 
-          <InfoCard Icon={Leaf} title="Herb garden">
-            Please water the herb garden outside as needed — they're thirsty little guys.
-          </InfoCard>
-
-          <InfoCard Icon={User} title="Elizabeth (Nanny)">
-            Elizabeth is here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry, restock the diaper changing stations, and take out the diaper trash. You can decide how much additional childcare help you'd like from her.
-          </InfoCard>
-
-          <InfoCard Icon={Trash2} title="Trash">
-            Trash pickup is Tuesday morning. Pull the bins out to the street Monday night, and bring them back in Tuesday after the truck comes.
-          </InfoCard>
-
           <div style={{
             backgroundColor: C.amberBg, borderRadius: '10px',
             border: `1px solid ${C.border}`, borderLeft: `3px solid ${C.amber}`,
@@ -220,6 +237,29 @@ export default function HouseTab() {
               Just a reminder of what we flagged before we left — we're at a stage where we're keeping Lincoln away from dogs (his movements are pretty unpredictable right now), so Sarah's dogs and Lincoln will need to stay separated the whole visit. And since Mylo tends to get anxious without Sarah around — which then gets Spritz going — the dogs really can't be left alone at the house.
             </p>
           </div>
+        </div>
+      )}
+
+      {/* Schedule */}
+      {segment === 'schedule' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <InfoCard Icon={User} title="Elizabeth (Nanny)">
+            Here Monday–Thursday (Friday is a holiday). At a minimum, she will handle Lincoln's food prep, bottles, and laundry, restock the diaper changing stations, and take out the diaper trash. You can decide how much additional childcare help you'd like from her.
+          </InfoCard>
+
+          <DayCard day="Monday" items={[
+            'Yard crew arrives — no set time.',
+            'Put trash bins out to the street tonight.',
+          ]} />
+
+          <DayCard day="Tuesday" items={[
+            'Trash pickup in the morning — bring the bins back in after the truck comes.',
+            'Cleaners arrive every other week.',
+          ]} />
+
+          <InfoCard Icon={Leaf} title="Herb garden">
+            Water as needed — they're thirsty little guys.
+          </InfoCard>
         </div>
       )}
 
