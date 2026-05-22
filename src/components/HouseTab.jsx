@@ -155,7 +155,7 @@ export default function HouseTab() {
           The house.
         </h1>
         <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>
-          Everything you need.
+          Thank you so much for being here 🫶
         </p>
       </div>
 

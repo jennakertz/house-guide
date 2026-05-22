@@ -647,7 +647,7 @@ export default function ScheduleTab() {
               }} />
             </div>
             <span style={{ fontSize: '13px', color: C.muted, fontStyle: 'italic' }}>
-              {filter === 'spritz' ? 'Good night, Spritz.' : 'Sweet dreams, Lincoln.'}
+              {filter === 'spritz' ? 'Good night, Spritz.' : 'Sweet dreams, Lincoln. ✨'}
             </span>
           </div>
         </div>
