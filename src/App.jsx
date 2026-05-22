@@ -42,7 +42,7 @@ export default function App() {
           maxWidth: '430px',
           height: 'calc(56px + env(safe-area-inset-bottom))',
           paddingBottom: 'env(safe-area-inset-bottom)',
-          backgroundColor: 'rgba(255, 253, 251, 0.68)',
+          backgroundColor: 'rgba(255, 253, 251, 0.45)',
           backdropFilter: 'blur(24px) saturate(1.8)',
           WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
           borderTop: '1px solid rgba(255, 255, 255, 0.75)',

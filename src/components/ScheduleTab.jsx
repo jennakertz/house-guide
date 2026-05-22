@@ -547,14 +547,14 @@ export default function ScheduleTab() {
           onClick={jumpToNow}
           style={{
             display: 'flex', alignItems: 'center', gap: '7px',
-            backgroundColor: C.blue, color: C.text,
+            backgroundColor: '#4A4540', color: '#FFFFFF',
             border: 'none', borderRadius: '6px',
             padding: '9px 16px', fontSize: '13px', fontWeight: 500,
             cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
             flexShrink: 0,
           }}
         >
-          <Clock size={15} strokeWidth={2} color={C.text} />
+          <Clock size={15} strokeWidth={2} color="#FFFFFF" />
           Jump to Now
         </button>
 
