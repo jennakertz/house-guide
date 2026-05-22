@@ -1,25 +1,44 @@
-import { useState } from 'react'
-import { CalendarDays, Home, AlertTriangle } from 'lucide-react'
+import { useState, useRef, useCallback } from 'react'
+import { CalendarDays, Home, Phone } from 'lucide-react'
 import ScheduleTab from './components/ScheduleTab'
 import HouseTab from './components/HouseTab'
 import EmergencyTab from './components/EmergencyTab'
 
 const TABS = [
-  { id: 'schedule',  label: 'Schedule',  Icon: CalendarDays },
-  { id: 'house',     label: 'House',     Icon: Home },
-  { id: 'emergency', label: 'Emergency', Icon: AlertTriangle },
+  { id: 'schedule',  label: 'Schedule', Icon: CalendarDays },
+  { id: 'house',     label: 'House',    Icon: Home },
+  { id: 'emergency', label: 'Contacts', Icon: Phone },
 ]
 
 const ACCENT = '#7EC8C8'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('schedule')
+  const [navVisible, setNavVisible] = useState(true)
+  const lastScrollY = useRef(0)
+
+  const handleScroll = useCallback((e) => {
+    const y = e.currentTarget.scrollTop
+    if (y > lastScrollY.current + 10 && y > 60) {
+      setNavVisible(false)
+    } else if (y < lastScrollY.current - 10) {
+      setNavVisible(true)
+    }
+    lastScrollY.current = y
+  }, [])
+
+  const handleTabChange = useCallback((tabId) => {
+    setActiveTab(tabId)
+    setNavVisible(true)
+    lastScrollY.current = 0
+  }, [])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', backgroundColor: '#F5F3EF' }}>
       {/* Scrollable content */}
       <div
         className="no-scrollbar"
+        onScroll={handleScroll}
         style={{
           flex: 1,
           overflowY: 'auto',
@@ -37,7 +56,9 @@ export default function App() {
           position: 'fixed',
           bottom: 'calc(20px + env(safe-area-inset-bottom))',
           left: '50%',
-          transform: 'translateX(-50%)',
+          transform: navVisible
+            ? 'translateX(-50%) translateY(0)'
+            : 'translateX(-50%) translateY(calc(100% + 28px))',
           width: 'calc(100% - 32px)',
           maxWidth: '400px',
           height: '62px',
@@ -55,16 +76,17 @@ export default function App() {
           display: 'flex',
           alignItems: 'stretch',
           zIndex: 40,
+          transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
         }}
       >
         {TABS.map(tab => {
           const isActive = activeTab === tab.id
           const { Icon } = tab
-          const color = isActive ? ACCENT : '#B8B0A8'
+          const color = isActive ? ACCENT : '#5C554E'
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
               style={{
                 flex: 1, display: 'flex', flexDirection: 'column',
                 alignItems: 'center', justifyContent: 'center',

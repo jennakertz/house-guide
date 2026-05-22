@@ -527,19 +527,14 @@ export default function ScheduleTab() {
 
       {/* Header */}
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <h1
-            className="serif"
-            style={{ fontSize: '26px', fontWeight: 400, color: C.text, lineHeight: 1.2 }}
-          >
-            Schedule.
-          </h1>
-          <span style={{ fontSize: '13px', color: C.muted, flexShrink: 0, marginLeft: '12px' }}>
-            {timeStr}
-          </span>
-        </div>
-        <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>
+        <h1
+          className="serif"
+          style={{ fontSize: '26px', fontWeight: 400, color: C.text, lineHeight: 1.25 }}
+        >
           {getGreeting()} — here's the day.
+        </h1>
+        <p style={{ fontSize: '15px', color: C.muted, marginTop: '4px' }}>
+          {timeStr}
         </p>
       </div>
 
