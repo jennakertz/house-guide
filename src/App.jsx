@@ -10,7 +10,7 @@ const TABS = [
   { id: 'emergency', label: 'Emergency', Icon: AlertTriangle },
 ]
 
-const ACCENT = '#B85C38'
+const ACCENT = '#7EC8C8'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('schedule')
@@ -42,11 +42,11 @@ export default function App() {
           maxWidth: '430px',
           height: 'calc(56px + env(safe-area-inset-bottom))',
           paddingBottom: 'env(safe-area-inset-bottom)',
-          backgroundColor: 'rgba(255, 252, 250, 0.88)',
-          backdropFilter: 'blur(24px) saturate(1.6)',
-          WebkitBackdropFilter: 'blur(24px) saturate(1.6)',
-          borderTop: '1px solid rgba(232, 228, 222, 0.7)',
-          boxShadow: '0 -1px 12px rgba(26,22,18,0.05)',
+          backgroundColor: 'rgba(255, 253, 251, 0.68)',
+          backdropFilter: 'blur(24px) saturate(1.8)',
+          WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.75)',
+          boxShadow: '0 -1px 0 rgba(232,228,222,0.6), 0 -4px 20px rgba(26,22,18,0.06)',
           display: 'flex',
           alignItems: 'stretch',
           zIndex: 40,
@@ -55,7 +55,7 @@ export default function App() {
         {TABS.map(tab => {
           const isActive = activeTab === tab.id
           const { Icon } = tab
-          const color = isActive ? ACCENT : '#C4BDB5'
+          const color = isActive ? ACCENT : '#B8B0A8'
           return (
             <button
               key={tab.id}

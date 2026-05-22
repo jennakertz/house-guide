@@ -213,8 +213,8 @@ const TWO_NAP_EVENTS = [
   },
   {
     id: 'overnight',
-    startHour: 21, endHour: 30,
-    time: 'Overnight',
+    startHour: 19, endHour: 31,
+    time: '7:00 PM – 7:00 AM',
     title: 'Overnight',
     Icon: Moon,
     preview: 'He almost always sleeps through.',
@@ -477,7 +477,10 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle, onMealtimeRules }
 export default function ScheduleTab() {
   const [oneNap, setOneNap] = useState(false)
   const [filter, setFilter] = useState('all')
-  const [expandedId, setExpandedId] = useState(null)
+  const [expandedId, setExpandedId] = useState(() => {
+    const id = getCurrentEventId(TWO_NAP_EVENTS)
+    return id === 'overnight' ? 'overnight' : null
+  })
   const [mealtimeOpen, setMealtimeOpen] = useState(false)
   const [currentId, setCurrentId] = useState(null)
   const [timeStr, setTimeStr] = useState(getTimeStr)
@@ -544,14 +547,14 @@ export default function ScheduleTab() {
           onClick={jumpToNow}
           style={{
             display: 'flex', alignItems: 'center', gap: '7px',
-            backgroundColor: C.text, color: '#FFFFFF',
+            backgroundColor: C.blue, color: C.text,
             border: 'none', borderRadius: '6px',
             padding: '9px 16px', fontSize: '13px', fontWeight: 500,
             cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
             flexShrink: 0,
           }}
         >
-          <Clock size={15} strokeWidth={2} color="#FFFFFF" />
+          <Clock size={15} strokeWidth={2} color={C.text} />
           Jump to Now
         </button>
 
