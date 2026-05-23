@@ -449,8 +449,20 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle, onMealtimeRules }
             boxShadow: isCurrent ? ACTIVE_SHADOW : CARD_SHADOW,
             transition: 'background-color 0.2s, box-shadow 0.2s',
           }}>
-            <div style={{ fontSize: '12px', color: C.muted, marginBottom: '5px', letterSpacing: '0.01em' }}>
-              {event.time}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '5px' }}>
+              <span style={{ fontSize: '12px', color: C.muted, letterSpacing: '0.01em' }}>
+                {event.time}
+              </span>
+              {isCurrent && (
+                <span style={{
+                  fontSize: '11px', fontWeight: 500, color: C.blue,
+                  backgroundColor: `${C.blue}18`,
+                  padding: '2px 7px', borderRadius: '20px',
+                  letterSpacing: '0.04em',
+                }}>
+                  Now
+                </span>
+              )}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, minWidth: 0 }}>
