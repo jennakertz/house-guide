@@ -270,7 +270,7 @@ export default function HouseTab() {
                       )}
                       <div style={{
                         width: '8px', height: '8px', borderRadius: '50%',
-                        backgroundColor: hasItems ? C.blue : C.border,
+                        backgroundColor: (isToday || hasItems) ? C.blue : C.border,
                         boxShadow: isToday
                           ? `0 0 0 3px ${C.blue}33, 0 0 0 2.5px #F5F3EF`
                           : '0 0 0 2.5px #F5F3EF',
