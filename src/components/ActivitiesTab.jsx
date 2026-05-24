@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { haptic } from '../haptic'
 import {
-  Leaf, Palette, Footprints, Baby, MapPin,
+  Leaf, Palette, Footprints, Baby, MapPin, ShoppingBag,
   Flame, UtensilsCrossed, Coffee, Sun,
 } from 'lucide-react'
 
@@ -184,6 +184,10 @@ export default function ActivitiesTab() {
 
           <ActivityCard Icon={MapPin} title="Virginia Highland">
             Walk up to the intersection of Virginia and Highland — there are shops, restaurants, and a great little bookstore that Lincoln loves. Good for a morning or afternoon outing.
+          </ActivityCard>
+
+          <ActivityCard Icon={ShoppingBag} title="Virginia Highland Farmers Market">
+            Opens Sundays at 8:30 AM — a short walk from the house. Great for a slow morning out with Lincoln.
           </ActivityCard>
 
         </div>
