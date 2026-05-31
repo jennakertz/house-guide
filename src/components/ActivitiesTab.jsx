@@ -268,6 +268,12 @@ export default function ActivitiesTab() {
             cuisine="Local coffee shop · Virginia Highland"
             detail="~20-minute walk. Worth it for a longer morning stroll."
           />
+          <FoodCard
+            Icon={Coffee}
+            name="Lerikin"
+            cuisine="Coffee by morning · wine bar by afternoon"
+            detail="Small plates, outdoor seating only. Walk there across Piedmont Park — it's a great reason to go."
+          />
 
         </div>
       )}
