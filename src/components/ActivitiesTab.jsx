@@ -270,7 +270,7 @@ export default function ActivitiesTab() {
           />
           <FoodCard
             Icon={Coffee}
-            name="Lerikin"
+            name="Larakin"
             cuisine="Coffee by morning · wine bar by afternoon"
             detail="Small plates, outdoor seating only. Walk there across Piedmont Park — it's a great reason to go."
           />
