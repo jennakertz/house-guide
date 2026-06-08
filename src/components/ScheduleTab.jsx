@@ -98,6 +98,20 @@ const TWO_NAP_EVENTS = [
     dotColor: C.yellow,
   },
   {
+    id: 'snack1',
+    startHour: 9.5, endHour: 10,
+    time: '~9:30 AM',
+    title: 'Morning snack',
+    Icon: Utensils,
+    preview: 'Light snack before his nap.',
+    details: [
+      "Something small from his shelf in the fridge — just enough to hold him over before going down.",
+    ],
+    character: 'lincoln',
+    dotColor: C.sage,
+    hasMealtimeRules: true,
+  },
+  {
     id: 'nap1',
     startHour: 10, endHour: 11.5,
     time: '~10:00 – 11:30 AM',
@@ -126,6 +140,21 @@ const TWO_NAP_EVENTS = [
     character: 'lincoln',
     dotColor: C.sage,
     hasMealtimeRules: true,
+  },
+  {
+    id: 'snack2',
+    startHour: 14.5, endHour: 15,
+    time: '~2:30 PM',
+    title: 'Afternoon snack',
+    Icon: Utensils,
+    preview: 'Light snack before his second nap.',
+    details: [
+      "Something small from his shelf — keep it light before going down for his second nap.",
+    ],
+    character: 'lincoln',
+    dotColor: C.sage,
+    hasMealtimeRules: true,
+    twoNapOnly: true,
   },
   {
     id: 'nap2',
