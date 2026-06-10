@@ -42,7 +42,12 @@ const WEEK = [
   { id: 'thu', label: 'Thursday',  jsDay: 4, items: ['Elizabeth is here.'] },
   { id: 'fri', label: 'Friday',    jsDay: 5, items: ["Elizabeth's day off."] },
   { id: 'sat', label: 'Saturday',  jsDay: 6, items: [] },
-  { id: 'sun', label: 'Sunday',    jsDay: 0, items: [] },
+  { id: 'sun', label: 'Sunday',    jsDay: 0, items: [
+    'Barkbus mobile grooming for Spritz — June 14th, 12:45–2:45 PM.',
+    'Bring Spritz to the door on his leash. They\'ll take him, wash him, and return him.',
+    'No payment needed — they charge us directly.',
+    'Parking: they must park on the street, not in the gravel lot next to the house.',
+  ]},
 ]
 
 function SectionLabel({ children }) {
