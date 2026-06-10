@@ -39,7 +39,7 @@ const WEEK = [
     ],
   },
   { id: 'wed', label: 'Wednesday', jsDay: 3, items: ['Elizabeth is here.'] },
-  { id: 'thu', label: 'Thursday',  jsDay: 4, items: ['Elizabeth is here.'] },
+  { id: 'thu', label: 'Thursday',  jsDay: 4, items: ['Elizabeth is here.', 'Bath night for Lincoln.'] },
   { id: 'fri', label: 'Friday',    jsDay: 5, items: ["Elizabeth's day off."] },
   { id: 'sat', label: 'Saturday',  jsDay: 6, items: [] },
   { id: 'sun', label: 'Sunday',    jsDay: 0, items: [
@@ -215,7 +215,7 @@ export default function HouseTab() {
           </InfoCard>
 
           <InfoCard Icon={BedDouble} title="Your room">
-            Your bed is made up with fresh linens. Towels and washcloths are ready for you.
+            Your bed is made up with fresh linens. Towels are ready for you.
           </InfoCard>
 
           <InfoCard Icon={Wifi} title="Wifi">
