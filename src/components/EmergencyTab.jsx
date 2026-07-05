@@ -99,16 +99,10 @@ export default function EmergencyTab() {
         </p>
       </div>
 
-      {/* Hero: Call us */}
-      <div style={{
-        backgroundColor: C.text, borderRadius: '10px', padding: '20px',
-        color: '#FFFFFF',
-        boxShadow: '0 4px 20px rgba(74,69,64,0.18), 0 1px 4px rgba(74,69,64,0.1)',
-      }}>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <CallBtn number="(573) 561-6782" label="Jenna" variant="light" />
-          <CallBtn number="(540) 871-3501" label="Josh"  variant="light" />
-        </div>
+      {/* Quick call buttons */}
+      <div style={{ display: 'flex', gap: '10px' }}>
+        <CallBtn number="(573) 561-6782" label="Call Jenna" variant="dark" />
+        <CallBtn number="(540) 871-3501" label="Call Josh"  variant="dark" />
       </div>
 
       {/* 911 */}
