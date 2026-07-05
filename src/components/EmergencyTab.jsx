@@ -99,18 +99,12 @@ export default function EmergencyTab() {
         </p>
       </div>
 
-      {/* Hero: We're in Mexico */}
+      {/* Hero: Call us */}
       <div style={{
         backgroundColor: C.text, borderRadius: '10px', padding: '20px',
         color: '#FFFFFF',
         boxShadow: '0 4px 20px rgba(74,69,64,0.18), 0 1px 4px rgba(74,69,64,0.1)',
       }}>
-        <div style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>
-          We're in Mexico · June 14–19
-        </div>
-        <div style={{ fontSize: '15px', fontWeight: 500, marginBottom: '16px', color: 'rgba(255,255,255,0.85)' }}>
-          Viceroy Riviera Maya Resort
-        </div>
         <div style={{ display: 'flex', gap: '10px' }}>
           <CallBtn number="(573) 561-6782" label="Jenna" variant="light" />
           <CallBtn number="(540) 871-3501" label="Josh"  variant="light" />
