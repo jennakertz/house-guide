@@ -33,18 +33,17 @@ const CARD_SHADOW = '0 1px 2px rgba(74,69,64,0.05), 0 2px 10px rgba(74,69,64,0.0
 const ACTIVE_SHADOW = '0 2px 14px rgba(126,200,200,0.22), 0 1px 3px rgba(74,69,64,0.07)'
 
 // ─── Timeline events ─────────────────────────────────────────────────────────
-const TWO_NAP_EVENTS = [
+const EVENTS = [
   {
     id: 'wake',
     startHour: 6, endHour: 7.25,
     time: '6:00 – 7:15 AM',
-    title: 'Wake up & morning bottle',
+    title: 'Wake up',
     Icon: Sunrise,
     preview: 'Leave him in the crib until 7:00–7:15 AM.',
     details: [
       "It's okay to leave Lincoln in his crib for a few minutes while you wake up. Get him out by 7:00–7:15 AM.",
-      "Give him his morning bottle — 6 oz, warmed. (We may be transitioning to a sippy cup by the time you arrive — we'll update you.)",
-      "Bottles are warmed using the bottle warmer on the counter — follow the printed instructions next to it.",
+      "He drinks water from his straw cup throughout the day — offer some when he wakes up.",
     ],
     character: 'lincoln',
     dotColor: C.blue,
@@ -100,8 +99,8 @@ const TWO_NAP_EVENTS = [
   },
   {
     id: 'snack1',
-    startHour: 10, endHour: 10.5,
-    time: '~10:00 AM',
+    startHour: 10.5, endHour: 11.25,
+    time: '~10:30 AM',
     title: 'Morning snack',
     Icon: Utensils,
     preview: 'Light snack before his nap.',
@@ -113,29 +112,30 @@ const TWO_NAP_EVENTS = [
     hasMealtimeRules: true,
   },
   {
-    id: 'nap1',
-    startHour: 10.5, endHour: 11.5,
-    time: '~10:30 – 11:30 AM',
-    title: 'First nap',
+    id: 'nap',
+    startHour: 11.5, endHour: 14.5,
+    time: '11:30 AM – ~2:00–2:30 PM',
+    title: 'Nap',
     Icon: Moon,
-    preview: 'Down between 10:30–11:00 AM.',
+    preview: 'Nap starts at 11:30. He usually sleeps 2.5–3 hours.',
     details: [
-      "Try to get him down between 10:30–11:00 AM.",
-      "Nap routine: (1) Change diaper, (2) Put on sleep sack, (3) Read 1–2 books, (4) Place in crib with his stuffed animals and at least 3 pacifiers.",
+      "Try to get him down right at 11:30 AM.",
+      "Nap routine: (1) Change diaper, (2) Put on sleep sack, (3) Read 1–2 books, (4) Place in crib with his stuffed animals and 2 pacifiers.",
       "Monitor him on the Nanit — the old iPhone is kept downstairs. Passcode: 111111.",
+      "He usually sleeps 2.5–3 hours — that's totally normal.",
     ],
     character: 'lincoln',
     dotColor: C.lav,
   },
   {
     id: 'lunch',
-    startHour: 12.5, endHour: 14,
-    time: '~12:30 – 2:00 PM',
+    startHour: 14.5, endHour: 16,
+    time: '~3:00 PM',
     title: 'Lunch & play',
     Icon: Utensils,
-    preview: 'Lunch around 12:30 after he wakes from his nap.',
+    preview: 'Some playtime after he wakes, then lunch around 3:00 PM.',
     details: [
-      "He usually wakes around 11:30 AM — some playtime first, then lunch around 12:30.",
+      "Give him some time to fully wake up and play — aim for lunch around 3:00 PM.",
       "Food from his fridge shelf.",
     ],
     character: 'lincoln',
@@ -144,49 +144,17 @@ const TWO_NAP_EVENTS = [
   },
   {
     id: 'snack2',
-    startHour: 14.5, endHour: 15,
-    time: '~2:30 PM',
+    startHour: 16, endHour: 16.75,
+    time: '~4:30 PM',
     title: 'Afternoon snack',
     Icon: Utensils,
-    preview: 'Light snack before his second nap.',
+    preview: 'Light snack mid-afternoon.',
     details: [
-      "Something small from his shelf — keep it light before going down for his second nap.",
+      "Something small from his shelf — keeps him going until dinner.",
     ],
     character: 'lincoln',
     dotColor: C.sage,
     hasMealtimeRules: true,
-    twoNapOnly: true,
-  },
-  {
-    id: 'nap2',
-    startHour: 15, endHour: 15.5,
-    time: '3:00 – 3:30 PM',
-    title: 'Second nap',
-    Icon: Moon,
-    preview: 'Same nap routine. Down between 3:00–3:30 PM.',
-    details: [
-      "Same nap routine as above.",
-      "Try to get him down between 3:00–3:30 PM.",
-      "Do not let him sleep past 5:15 PM — wake him gently if needed so he has enough sleep pressure for bedtime.",
-    ],
-    character: 'lincoln',
-    dotColor: C.lav,
-    twoNapOnly: true,
-  },
-  {
-    id: 'wake-nap2',
-    startHour: 16.5, endHour: 17.25,
-    time: '~4:30 – 5:15 PM',
-    title: 'Wake from second nap',
-    Icon: Sunrise,
-    preview: 'He should be up by 5:15 PM at the latest.',
-    details: [
-      "He should be up by 5:15 PM at the latest.",
-      "After he wakes, offer a snack if he asks for one.",
-    ],
-    character: 'lincoln',
-    dotColor: C.blue,
-    twoNapOnly: true,
   },
   {
     id: 'spritz-walk-pm',
@@ -206,13 +174,13 @@ const TWO_NAP_EVENTS = [
   },
   {
     id: 'dinner',
-    startHour: 17, endHour: 17.5,
-    time: '~5:00 – 5:30 PM',
+    startHour: 17.5, endHour: 18,
+    time: '~5:30 PM',
     title: 'Dinner',
     Icon: Utensils,
-    preview: 'Dinner between 5:00–5:30 PM.',
+    preview: 'Dinner at 5:30 PM.',
     details: [
-      "Aim for dinner between 5:00–5:30 PM so he's still hungry for his bottle at bedtime.",
+      "Aim for dinner at 5:30 PM — bedtime routine starts right at 6:00.",
       "Food from his fridge shelf.",
     ],
     character: 'lincoln',
@@ -225,13 +193,10 @@ const TWO_NAP_EVENTS = [
     time: '6:00 – 7:00 PM',
     title: 'Bedtime',
     Icon: BedDouble,
-    preview: 'Timing depends on when he woke from his last nap.',
+    preview: 'Bedtime routine starts at 6:00 PM.',
     details: [
-      "Timing depends on when he woke from his last nap.",
-      "If he woke at 3:30 PM → start bedtime at 6:00 PM.",
-      "If he woke around 5:00 PM → start bedtime around 6:45 PM.",
-      "Aim for him to be in the crib by 7:00 PM.",
-      "Bedtime routine: (1) Warm bottle or sippy cup, (2) Change diaper, (3) Sleep sack, (4) Brush teeth — he hates this, but do it anyway, (5) Read books, (6) Crib with stuffed animals and at least 3 pacifiers.",
+      "Start the bedtime routine at 6:00 PM. Aim for him to be in the crib by 7:00 PM.",
+      "Bedtime routine: (1) Change diaper, (2) Sleep sack, (3) Brush teeth — he hates this, but do it anyway, (4) Read books, (5) Crib with his stuffed animals and 2 pacifiers.",
       "For books: the second-to-last book is always the Goodbye Pacifier book. While you read it, get out the special bag and drop one pacifier in, close it, and wave bye bye together.",
       "The last book is always one of the Your Places books.",
       "Keep the Nanit on overnight.",
@@ -270,23 +235,6 @@ const TWO_NAP_EVENTS = [
   },
 ]
 
-const ONE_NAP_EVENTS = TWO_NAP_EVENTS
-  .filter(e => !e.twoNapOnly)
-  .map(e => {
-    if (e.id !== 'nap1') return e
-    return {
-      ...e,
-      title: 'Nap',
-      preview: 'May sleep up to 3 hours on a one-nap day.',
-      details: [
-        "Nap starts about 3.5 hours after he woke up. On a one-nap day, he may sleep up to 3 hours — that's okay.",
-        "Nap routine: (1) Change diaper, (2) Put on sleep sack, (3) Read 1–2 books, (4) Place in crib with his stuffed animals and at least 3 pacifiers.",
-        "Monitor him on the Nanit — the old iPhone is kept downstairs. Passcode: 111111.",
-        "If he sleeps under 2 hrs 45 min, he may still need a second nap later.",
-      ],
-    }
-  })
-
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function getGreeting() {
   const h = new Date().getHours()
@@ -315,7 +263,6 @@ function getCurrentEventId(events) {
   if (active.length) {
     return (active.find(e => e.character === 'lincoln') ?? active[0]).id
   }
-  // During schedule gaps, fall back to the next upcoming event
   return getNextEventId(events)
 }
 
@@ -556,27 +503,21 @@ function TimelineEvent({ event, isActive, isCurrent, onToggle, onMealtimeRules }
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function ScheduleTab() {
-  const [oneNap, setOneNap] = useState(false)
   const [filter, setFilter] = useState('all')
   const [expandedId, setExpandedId] = useState(() => {
-    const id = getCurrentEventId(TWO_NAP_EVENTS)
+    const id = getCurrentEventId(EVENTS)
     return id === 'overnight' ? 'overnight' : null
   })
   const [mealtimeOpen, setMealtimeOpen] = useState(false)
   const [currentId, setCurrentId] = useState(null)
   const [timeStr, setTimeStr] = useState(getTimeStr)
 
-  const baseEvents = useMemo(
-    () => (oneNap ? ONE_NAP_EVENTS : TWO_NAP_EVENTS),
-    [oneNap]
-  )
-
   const filteredEvents = useMemo(
-    () => filter === 'all' ? baseEvents : baseEvents.filter(e => e.character === filter),
-    [baseEvents, filter]
+    () => filter === 'all' ? EVENTS : EVENTS.filter(e => e.character === filter),
+    [filter]
   )
 
-  useEffect(() => { setExpandedId(null) }, [filter, oneNap])
+  useEffect(() => { setExpandedId(null) }, [filter])
 
   useEffect(() => {
     setCurrentId(getCurrentEventId(filteredEvents))
@@ -636,40 +577,6 @@ export default function ScheduleTab() {
           <Clock size={15} strokeWidth={2} color="#FFFFFF" />
           Jump to Now
         </button>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: 'auto' }}>
-          <span
-            onClick={() => { haptic(60); setOneNap(v => !v) }}
-            style={{
-              fontSize: '13px', color: C.muted, cursor: 'pointer',
-              userSelect: 'none', whiteSpace: 'nowrap',
-            }}
-          >
-            One nap day
-          </span>
-          <button
-            onClick={() => { haptic(60); setOneNap(v => !v) }}
-            role="switch"
-            aria-checked={oneNap}
-            style={{
-              width: '44px', height: '26px', borderRadius: '100px',
-              backgroundColor: oneNap ? C.blue : C.border,
-              border: 'none', cursor: 'pointer', padding: 0,
-              position: 'relative', flexShrink: 0,
-              transition: 'background-color 0.25s',
-              outline: 'none',
-            }}
-          >
-            <div style={{
-              width: '20px', height: '20px', borderRadius: '50%',
-              backgroundColor: '#FFFFFF',
-              position: 'absolute', top: '3px',
-              left: oneNap ? '21px' : '3px',
-              transition: 'left 0.25s',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.18)',
-            }} />
-          </button>
-        </div>
       </div>
 
       {/* Segmented filter */}
@@ -684,21 +591,6 @@ export default function ScheduleTab() {
           onChange={setFilter}
         />
       </div>
-
-      {/* One-nap banner */}
-      {oneNap && filter !== 'spritz' && (
-        <div style={{
-          backgroundColor: '#F0FAFA',
-          border: `1px solid ${C.blue}`,
-          borderRadius: '8px',
-          padding: '11px 14px',
-          fontSize: '13px',
-          color: C.text,
-          lineHeight: '1.5',
-        }}>
-          <strong>One nap day</strong> — schedule adjusted. If he sleeps under 2 hrs 45 min, he may still need a second nap.
-        </div>
-      )}
 
       {/* Timeline section label */}
       <SectionLabel style={{ paddingLeft: '32px' }}>Today's schedule</SectionLabel>
