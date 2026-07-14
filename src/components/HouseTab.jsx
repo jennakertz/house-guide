@@ -228,19 +228,6 @@ export default function HouseTab() {
             Adjust the thermostat to whatever is comfortable. Please keep it at or below 72°F — Lincoln sleeps best in a cooler room.
           </InfoCard>
 
-          <div style={{
-            backgroundColor: C.amberBg, borderRadius: '10px',
-            border: `1px solid ${C.border}`, borderLeft: `3px solid ${C.amber}`,
-            padding: '16px 16px 16px 14px', boxShadow: CARD_SHADOW,
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-              <PawPrint size={16} strokeWidth={1.5} color={C.amber} />
-              <span style={{ fontSize: '15px', fontWeight: 500, color: C.text }}>A note about the pups</span>
-            </div>
-            <p style={{ fontSize: '14px', color: C.text, lineHeight: '1.6' }}>
-              Just a reminder of what we flagged before we left — we're at a stage where we're keeping Lincoln away from dogs (his movements are pretty unpredictable right now), so Sarah's dogs and Lincoln will need to stay separated the whole visit. And since Mylo tends to get anxious without Sarah around — which then gets Spritz going — the dogs really can't be left alone at the house.
-            </p>
-          </div>
         </div>
       )}
 
