@@ -264,7 +264,7 @@ export default function ActivitiesTab() {
           />
           <FoodCard
             Icon={Coffee}
-            name="Perk Coffee"
+            name="Perc Coffee"
             cuisine="Local coffee shop · Virginia Highland"
             detail="~20-minute walk. Worth it for a longer morning stroll."
           />
